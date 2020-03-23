@@ -1,0 +1,84 @@
+{% extends 'app_manage/manage.html' %}
+
+{% block manage_css %}{{ dec_form.media }}{% endblock %}
+
+
+
+{% block manage_body %}
+    <form action="{% url 'manage_company' %}" method="post" class="form-horizontal" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="name">公司名称<span style="color: red;">*</span></label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="name" name="name" value="{{ company.name }}" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="slogan">公司口号/宗旨</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="slogan" name="slogan" value="{{ company.slogan }}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="id_logo">公司logo</label>
+            <div class="col-sm-10">
+                {% if company.logo %}
+                    <div class="col-sm-2 control-label">
+                        <img src="{{ company.logo.url }}" style="height: 60px; width: 60px;" alt="未选择图片"/>
+                    </div>
+                {% endif %}
+                <div class="col-sm-10">
+                    {{ company_image_form.logo }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="id_big_img">官网首页大背景图</label>
+            <div class="col-sm-10">
+                {% if company.big_img %}
+                    <div class="col-sm-2 control-label">
+                        <img src="{{ company.big_img.url }}" style="height: 60px; width: 100px;" alt="未选择图片"/>
+                    </div>
+                {% endif %}
+                <div class="col-sm-10">
+                    {{ company_image_form.big_img }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">公司简介</label>
+            <div class="col-sm-10">
+                {{ dec_form }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="email">公司邮箱</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="email" name="email" value="{{ company.email }}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="telephone">联系电话</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="telephone" name="telephone" value="{{ company.telephone }}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="phone">手机号码</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="phone" name="phone" value="{{ company.phone }}"/>
+            </div>
+        </div>
+        <button class="btn btn-primary" style="float:right;" type="submit">保存</button>
+    </form>
+{% endblock %}
+
+
+
+{% block manage_js %}
+    <script>
+        //如果公司有简介就填充在dec_form中
+        document.getElementById("id_dec").value='{{ company.dec|safe }}'
+    </script>
+{% endblock %}
+

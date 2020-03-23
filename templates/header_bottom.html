@@ -1,0 +1,28 @@
+<div class="header-bottom">
+    <div class="w3ls-logo">
+        <h2><a href="{% url 'homepage' %}">
+            {% if company.name %}
+                {{company.name}}
+            {% else %}
+                公司名称
+            {% endif %}
+        </a></h2>
+
+        <h3 style="text-align: right; border-top: 1px solid #efefef; margin-top: 10px;color: #2B2B2B;">
+            {% if company.slogan %}
+                {{company.slogan}}
+            {% else %}
+                公司口号、宗旨等15个字以内为佳
+            {% endif %}
+        </h3>
+    </div>
+    <div class="header-top-right">
+        <form action="{% url 'search' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="keyword" placeholder="站内搜索" required="" autofocus x-webkit-speech value="{{ request.session.keyword }}"/>
+            <input type="submit" value=""/>
+            <div class="clearfix"> </div>
+        </form>
+    </div>
+    <div class="clearfix"> </div>
+</div>

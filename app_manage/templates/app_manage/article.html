@@ -1,0 +1,116 @@
+{% extends 'app_manage/manage.html' %}
+
+{% block manage_css %}{{ content_form.media }}{% endblock %}
+
+
+
+{% block manage_body %}
+    {% if menu12s %}
+        <form {% if article %}action="{% url 'manage_article' article.id %}"{% else %}action="{% url 'write_article' %}"{% endif %} method="post" class="form-horizontal" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="title">文章标题<span style="color: red;">*</span></label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="title" name="title" value="{{ article.title }}" required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="id_logo">文章封面图片<span style="color: red;">*</span></label>
+                <div class="col-sm-10">
+                    {% if article.cover_img %}
+                        <div class="col-sm-2 control-label">
+                            <img src="{{ article.cover_img.url }}" style="height: 60px; width: 120px;" alt="未选择图片"/>
+                        </div>
+                    {% endif %}
+                    <div class="col-sm-10">
+                        {{ article_image_form.cover_img }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">文章内容<span style="color: red;">*</span></label>
+                <div class="col-sm-10">
+                    {{ content_form }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">文章分类<span style="color: red;">*</span></label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="category_id">
+                        {% for menu12 in menu12s %}
+                            {% if forloop.first %}
+                                <option value={{ menu12.id }} selected>{{ menu12.name }}</option>
+                            {% else %}
+                                <option value={{ menu12.id }}>{{ menu12.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            {% if article %}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">发表时间</label>
+                    <div class="col-sm-10">
+                        <p class="form-control">{{ article.publish_time }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">最后修改时间</label>
+                    <div class="col-sm-10">
+                        <p class="form-control">{{ article.modified_time }}</p>
+                    </div>
+                </div>
+            {% endif %}
+
+            <button class="btn btn-primary" style="float:right;" type="submit">保存</button>
+            {% if article %}
+                <button class="btn btn-danger" style="float:right;margin-right: 10px;" onclick="del_article()">删除</button>
+            {% endif %}
+        </form>
+    {% else %}
+        <div class="text-center">
+            <a href="{% url 'manage_category' %}">暂无菜单，请先前往添加菜单分类 >>></a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+
+{% block manage_js %}
+    <script>
+        {% if article %}
+            let this_url = "{% url 'manage_article' article.id %}";
+            function del_article() {
+                let del = confirm('确定要删除吗？');
+                if(del) {
+                    common_ajax(this_url, "delete", "");
+                }
+            }
+        {% endif %}
+        //如果文章有内容就填充在content_form中
+        document.getElementById("id_content").value='{{ article.content|safe }}';
+
+
+        function common_ajax(url, submit_type, data){
+            $.ajax({
+                type:submit_type,
+                url:url,
+                data:data,
+                dataType:'JSON',
+                headers:{'X-CSRFToken':'{{ csrf_token }}'},
+                error:function(request){
+                    console.log("出错?", request);
+                    alert('操作失败，请重试一下哈');
+                },
+                success:function(data){
+                    if(!data.message){
+                        window.location.href = "{% url 'manage_articles' %}"
+                    }else{
+                        alert(data.message);
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock %}
+

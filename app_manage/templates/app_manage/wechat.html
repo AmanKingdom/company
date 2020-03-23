@@ -1,0 +1,49 @@
+{% extends 'app_manage/manage.html' %}
+
+{% block manage_css %}{% endblock %}
+
+
+
+{% block manage_body %}
+    <form action="{% url 'manage_wechat' %}" method="post" class="form-horizontal" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="name">公众号名称<span style="color: red;">*</span></label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="name" name="name" value="{{ wechat.name }}" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="id_qrcode">公众号二维码</label>
+            <div class="col-sm-10">
+                {% if wechat.qrcode %}
+                    <div class="col-sm-2 control-label">
+                        <img src="{{ wechat.qrcode.url }}" style="height: 60px; width: 60px;" alt="未选择图片"/>
+                    </div>
+                {% endif %}
+                <div class="col-sm-10">
+                    {{ wechat_image_form.qrcode }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="id_logo">公众号头像logo</label>
+            <div class="col-sm-10">
+                {% if wechat.logo %}
+                    <div class="col-sm-2 control-label">
+                        <img src="{{ wechat.logo.url }}" style="height: 60px; width: 60px;" alt="未选择图片"/>
+                    </div>
+                {% endif %}
+                <div class="col-sm-10">
+                    {{ wechat_image_form.logo }}
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" style="float:right;" type="submit">保存</button>
+    </form>
+{% endblock %}
+
+
+
+{% block manage_js %}{% endblock %}
+

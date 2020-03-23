@@ -1,0 +1,104 @@
+{% extends 'app_manage/manage.html' %}
+
+{% block manage_css %}{% endblock %}
+
+
+
+{% block manage_body %}
+
+    {% if carousels %}
+        <div class="row">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h3>首页轮播图</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead><tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">轮播图图片</th>
+                            <th class="text-center">轮播图对应文章</th>
+                            <th class="text-center">操作</th>
+                        </tr></thead>
+                        <tbody>
+                        {% for carousel in carousels %}
+                            <tr>
+                                <td>{{ carousel.number }}</td>
+                                <td><img src="{{ carousel.img.url }}" style="width:100px;"/></td>
+                                <td><a href="{% url 'manage_article' carousel.article.id %}">{{ carousel.article.title }}</a></td>
+                                <td>
+                                    <button class="btn btn-default" {% if forloop.first %}disabled{% endif %} onclick="up_number({{ carousel.id }})">上移</button>
+                                    <button class="btn btn-default" {% if forloop.last %}disabled{% endif %} onclick="down_number({{ carousel.id }})">下移</button>
+                                    <button class="btn btn-danger" onclick="del_carousel({{ carousel.id }})">删除</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row" style="margin-top: 30px;">
+        {% if menu1s %}
+            <div class="col-sm-3">
+                <ul class="nav nav-pills nav-stacked" style="border-left: 1px solid #efefef;border-right: 1px solid #efefef;">
+                    {% for menu1 in menu1s %}
+                        <li {% if not menu1.has_children and current_menu1.id|urlencode:'' == menu1.id|urlencode:'' %}class="active" aria-expanded="true"{% endif %}>
+                            {% if menu1.has_children %}
+                                <a href="#menu{{ menu1.id }}" class="nav-header collapsed" data-toggle="collapse">
+                                    {{ menu1.name }}
+                                    <i class="fa fa-angle-down" style="float: right;line-height: 1.5em;"></i>
+                                </a>
+                                <ul id="menu{{ menu1.id }}" class="nav nav-pills nav-stacked collapse in"  aria-expanded="true">
+                                    {% for menu2 in menu1.has_children %}
+                                        <li {% if current_menu2 %}{% if current_menu2.id|urlencode:'' == menu2.id|urlencode:'' %}class="active"{% endif %}{% endif %}>
+                                            <a style="padding-left: 50px;" href="{% url 'select_category' menu2.id %}">{{menu2.name}}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <a class="nav-header" href="{% url 'select_category' menu1.id %}">{{ menu1.name }}</a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-lg-9">
+                {% if articles %}
+                    <ul>
+                        {% for article in articles %}
+                            <a href="{% url 'manage_article' article.id %}">
+                                {% include 'article_list_item.html' %}
+                            </a>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-center">该分类暂无文章，<a href="{% url 'write_article' %}">去写文章 >>></a></p>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="text-center">
+                <a href="{% url 'manage_category' %}">暂无菜单，请先前往添加菜单分类 >>></a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+
+{% block manage_js %}
+    <script>
+        function del_carousel(carousel_id) {
+            common_reload_ajax("{% url 'manage_carousel' %}", "delete", JSON.stringify({'id': carousel_id}))
+        }
+        function up_number(carousel_id) {
+            common_reload_ajax("{% url 'manage_carousel' %}", "put", JSON.stringify({'id': carousel_id, 'operate': 1}))
+        }
+        function down_number(carousel_id) {
+            common_reload_ajax("{% url 'manage_carousel' %}", "put", JSON.stringify({'id': carousel_id, 'operate': 0}))
+        }
+    </script>
+{% endblock %}
+

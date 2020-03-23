@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+    <title>数据管理后台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="/static/css/font-awesome.css" rel="stylesheet">
+
+    <script src="/static/js/jquery-1.11.1.min.js"> </script>
+    <script src="/static/js/bootstrap.js"></script>
+    {% block manage_css %}{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-static-top navbar-inverse">
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2">
+        <div class="navbar-header navbar-form">
+            <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse_div" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="collapse_div">
+            <ul class="nav navbar-nav">
+                {% for menu in menus.values %}
+                    <li {% if menu.active %}class="active"{% endif %}><a href="{% url menu.url_name %}">{{menu.name}}</a></li>
+                {% endfor %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><div class="navbar-form"><button class="btn btn-default" onclick="logout()">退出账号</button></div></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="row" style="margin-bottom: 180px;">
+    <div class="col-lg-8 col-md-8 col-sm-10 col-xs-10 col-lg-offset-2 col-md-offset-2 col-sm-offset-1 col-xs-offset-1">
+        <div>
+            {% block manage_body %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+{% block manage_js %}{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#<div class="container">#}
+{#    <div class="row" style="margin-top: 50px;">#}
+{#        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">#}
+{#            <ul class="nav nav-pills nav-stacked">#}
+{#                <li role="presentation" class="active"><a href="#">Home</a></li>#}
+{#                <li role="presentation"><a href="#">Profile</a></li>#}
+{#                <li role="presentation"><a href="#">Messages</a></li>#}
+{#            </ul>#}
+{#        </div>#}
+{#        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+
+
+
+<script>
+    function common_ajax(url, submit_type, data){
+        $.ajax({
+            type:submit_type,
+            url:url,
+            data:data,
+            dataType:'JSON',
+            headers:{'X-CSRFToken':'{{ csrf_token }}'},
+            error:function(request){
+                console.log("出错?", request);
+                alert('操作失败，请重试一下哈');
+            },
+            success:function(data){
+                if(!data.message){
+                    window.location.reload()
+                }else{
+                    alert(data.message);
+                }
+            }
+        });
+    }
+
+    function common_reload_ajax(url, submit_type, data){
+        $.ajax({
+            type:submit_type,
+            url:url,
+            data:data,
+            dataType:'JSON',
+            headers:{'X-CSRFToken':'{{ csrf_token }}'},
+            error:function(request){
+                console.log("出错?", request);
+                alert('操作失败，请重试一下哈');
+            },
+            success:function(data){
+                if(!data.message){
+                    window.location.reload();
+                }else{
+                    alert(data.message);
+                }
+            }
+        });
+    }
+</script>
+
+<script>
+    function logout(){
+        $.ajax({
+            type:"GET",
+            url:"{% url 'logout' %}",
+            headers:{'X-CSRFToken':'{{ csrf_token }}'},
+            success:function(data){
+                if(!data.message){
+                    console.log('退出成功');
+                    window.location.href="{% url 'homepage' %}"
+                }else{
+                    alert(data.message);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>
