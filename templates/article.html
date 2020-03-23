@@ -34,7 +34,7 @@
 <!-- //header -->
 
 <div class="row">
-    <div class="col-lg-2 col-lg-offset-2">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-md-2 col-md-offset-2 col-lg-2">
         <ul class="nav menu1">
             {% for menu1 in menu1s %}
                 <li {% if current_menu1.id|urlencode:'' == menu1.id|urlencode:'' %}class="active1" aria-expanded="true"{% endif %}>
@@ -59,17 +59,15 @@
             {% endfor %}
         </ul>
     </div>
-    <div class="col-lg-6">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-md-6 col-md-offset-0 col-lg-6 col-lg-offset-0">
         {% if article %}
             {% include 'article_detail.html' %}
         {% elif articles %}
-            <ul>
-                {% for article in articles %}
-                    <a href="{% url 'article' article.id %}">
-                        {% include 'article_list_item.html' %}
-                    </a>
-                {% endfor %}
-            </ul>
+            {% for article in articles %}
+                <a href="{% url 'article' article.id %}">
+                    {% include 'article_list_item.html' %}
+                </a>
+            {% endfor %}
         {% else %}
             <p class="text-center" style="margin-top: 30px;">暂无文章</p>
         {% endif %}

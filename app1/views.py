@@ -57,8 +57,38 @@ def homepage(request):
         'menu1s': getMenu1s(),
         'abstract_texts': AbstractText.objects.all(),
         'wechat': getWechat(),
-        'carousels': Carousel.objects.all().order_by('number')
+        'carousels': Carousel.objects.all().order_by('number'),
+        'module1': Module.objects.filter(name='首页模块一'),
+        'module2': Module.objects.filter(name='首页模块二'),
+        'module1_left_articles': None,
+        'module1_right_articles': None,
+        'module2_left_articles': None,
+        'module2_right_articles': None,
     }
+
+    def set_module_and_articles(context, module_name):
+        if context[module_name]:
+            context[module_name] = context[module_name][0]
+
+            articles = []
+            module_categorys = context[module_name].category.has_children()
+            if module_categorys:
+                for category_item in module_categorys:
+                    temp_articles = category_item.articles.all()
+                    if temp_articles:
+                        articles.extend(temp_articles)
+            else:
+                articles = context[module_name].category.articles.all()
+            if articles:
+                articles.sort(key=lambda x: x.modified_time, reverse=True)
+                center = int(len(articles)/2)
+                if center == 0:
+                    center = 1
+                context[module_name + '_left_articles'] = articles[:center]
+                context[module_name + '_right_articles'] = articles[center:]
+
+    set_module_and_articles(context, 'module1')
+    set_module_and_articles(context, 'module2')
 
     return render(request, 'index.html', context=context, status=status.HTTP_200_OK)
 
@@ -125,4 +155,3 @@ def search(request):
             return render(request, 'search_result.html', context=context)
     except:
         return HttpResponseRedirect('/')
-

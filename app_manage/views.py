@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.views import View
 from rest_framework import status
 
-from app1.models import Company, AbstractText, Wechat, Category, Article, Carousel
+from app1.models import Company, AbstractText, Wechat, Category, Article, Carousel, Module
 from app1.views import getCompany, getWechat, getMenu1s, set_current_menus
 from app_manage.forms import LoginForm, DecForm, CompanyImageForm, WechatImageForm, ContentForm, ArticleImageForm
 from app_manage.models import User
@@ -179,6 +179,8 @@ def manage_category(request):
     context = {
         'menus': set_menus('manage_category'),
         'menu1s': getMenu1s(),
+        'module1': Module.objects.filter(name='首页模块一'),
+        'module2': Module.objects.filter(name='首页模块二'),
     }
 
     if request.method == 'GET':
@@ -381,6 +383,43 @@ def select_category(request, id):
     return render(request, 'app_manage/articles.html', context=context)
 
 
+def set_module(name, category_id):
+    module = Module.objects.filter(name=name)
+    print(category_id)
+    if category_id == '----空----':
+        print('删除')
+        module.delete()
+    else:
+        if module:
+            module = module[0]
+            module.category_id = category_id
+            module.save()
+        else:
+            Module.objects.create(name=name, category_id=category_id)
+
+
+@login_required(login_url='/')
+def set_module1(request):
+    if request.method == 'POST':  # 前端是form表单提交
+        post_data = request.POST
+        print('接收到post的设置模块1数据：', post_data)
+
+        name = '首页模块一'
+        set_module(name, post_data['category_id'])
+
+        return HttpResponseRedirect('/manage/manage_category')
+
+
+@login_required(login_url='/')
+def set_module2(request):
+    if request.method == 'POST':  # 前端是form表单提交
+        post_data = request.POST
+        print('接收到post的设置模块2数据：', post_data)
+
+        name = '首页模块二'
+        set_module(name, post_data['category_id'])
+
+        return HttpResponseRedirect('/manage/manage_category')
 
 
 

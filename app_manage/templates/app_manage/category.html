@@ -5,85 +5,116 @@
 
 
 {% block manage_body %}
-    <button class="btn btn-primary" style="float:right;" onclick="add_menu1()">添加一级菜单</button><br>
-    <div style="margin-bottom: 20px;"></div>
-
-    <div id="form_list">
-        {% for menu1 in menu1s %}
-            <div style="border-bottom: 1px solid #efefef;padding-bottom: 50px;">
-                <form class="form-horizontal">
+    {% if menu1s %}
+        <div class="panel panel-default text-center">
+            <div class="panel-heading">
+                <h3>首页模块设置</h3>
+            </div>
+            <div class="panel-body">
+                <form action="{% url 'set_module1' %}" method="post">
+                    {% csrf_token %}
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="name_{{ menu1.id }}">一级菜单名称<span style="color: red;">*</span></label>
+                        <label class="col-sm-2 control-label">首页模块一</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" id="name_{{ menu1.id }}" name="name" value="{{ menu1.name }}" data-id="{{ menu1.id }}" required onkeydown="if(event.keyCode===13)return false;"/>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="category_id">
+                                    <option>----空----</option>
+                                    {% for menu in menu1s %}
+                                        {% if module1 %}
+                                            {% if module1.0.category.id|urlencode:'' == menu.id|urlencode:'' %}
+                                                <option value={{ menu.id }} selected>{{ menu.name }}</option>
+                                            {% else %}
+                                                <option value={{ menu.id }}>{{ menu.name }}</option>
+                                            {% endif %}
+                                        {% else %}
+                                            <option value={{ menu.id }}>{{ menu.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-primary" style="float:right;" type="submit">保存</button>
+                            </div>
                         </div>
                     </div>
-                    {% if menu1.has_children %}
-                        {% for menu2 in menu1.has_children %}
-                            <div class="form-group">
-                                <label class="col-sm-2 col-sm-offset-1 control-label" for="name_{{ menu2.id }}">二级分类名称<span style="color: red;">*</span></label>
-                                <div class="col-sm-9">
-                                    <div class="col-sm-10">
-                                        <input class="form-control" type="text" id="name_{{ menu2.id }}" name="name" value="{{ menu2.name }}" data-id="{{ menu2.id }}" required/>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <button class="btn glyphicon glyphicon-trash" onclick="del_menu2(this)"></button>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
                 </form>
-                <button class="btn btn-primary" style="float:right;" onclick="save(this)">保存</button>
-                <button class="btn btn-danger" style="float:right;margin-right: 10px;" onclick="del_menu1(this)">删除一级菜单</button>
-                <button class="btn btn-primary" style="float:right;margin-right: 10px;" onclick="add_menu2(this)">添加二级分类</button>
+                <br><br>
+                <form action="{% url 'set_module2' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">首页模块二</label>
+                        <div class="col-sm-10">
+                            <div class="col-sm-10">
+                                <select class="form-control" name="category_id">
+                                    <option>----空----</option>
+                                    {% for menu in menu1s %}
+                                        {% if module2 %}
+                                            {% if module2.0.category.id|urlencode:'' == menu.id|urlencode:'' %}
+                                                <option value={{ menu.id }} selected>{{ menu.name }}</option>
+                                            {% else %}
+                                                <option value={{ menu.id }}>{{ menu.name }}</option>
+                                            {% endif %}
+                                        {% else %}
+                                            <option value={{ menu.id }}>{{ menu.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-primary" style="float:right;" type="submit">保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-        {% empty %}
-            <p id="tip1">还没有一级菜单，请点击添加按钮进行添加</p>
-        {% endfor %}
-    </div>
-
-    {% if menu1s %}
-        <div class="row">
-            <form>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">首页模块一</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="category_id">
-                            {% for menu in menu1s %}
-                                {% if forloop.first %}
-                                    <option value={{ menu.id }} selected>{{ menu.name }}</option>
-                                {% else %}
-                                    <option value={{ menu.id }}>{{ menu.name }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-
-                <button class="btn btn-primary" style="float:right;" type="submit">保存</button>
-            </form>
-
-            <form>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">首页模块二</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="category_id">
-                            {% for menu in menu1s %}
-                                {% if forloop.first %}
-                                    <option value={{ menu.id }} selected>{{ menu.name }}</option>
-                                {% else %}
-                                    <option value={{ menu.id }}>{{ menu.name }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-
-                <button class="btn btn-primary" style="float:right;" type="submit">保存</button>
-            </form>
         </div>
     {% endif %}
+
+
+
+    <div class="panel panel-default text-center">
+        <div class="panel-heading">
+            <h3>一级菜单和二级分类设置</h3>
+        </div>
+        <div class="panel-body">
+            <button class="btn btn-primary" style="float:right;" onclick="add_menu1()">添加一级菜单</button><br>
+            <div style="margin-bottom: 20px;"></div>
+            <div id="form_list">
+                {% for menu1 in menu1s %}
+                    <div style="border-bottom: 1px solid #efefef;padding-bottom: 50px;">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="name_{{ menu1.id }}">一级菜单名称<span style="color: red;">*</span></label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" id="name_{{ menu1.id }}" name="name" value="{{ menu1.name }}" data-id="{{ menu1.id }}" required onkeydown="if(event.keyCode===13)return false;"/>
+                                </div>
+                            </div>
+                            {% if menu1.has_children %}
+                                {% for menu2 in menu1.has_children %}
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-offset-1 control-label" for="name_{{ menu2.id }}">二级分类名称<span style="color: red;">*</span></label>
+                                        <div class="col-sm-9">
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" id="name_{{ menu2.id }}" name="name" value="{{ menu2.name }}" data-id="{{ menu2.id }}" required/>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <button class="btn glyphicon glyphicon-trash" onclick="del_menu2(this)"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </form>
+                        <button class="btn btn-primary" style="float:right;" onclick="save(this)">保存</button>
+                        <button class="btn btn-danger" style="float:right;margin-right: 10px;" onclick="del_menu1(this)">删除一级菜单</button>
+                        <button class="btn btn-primary" style="float:right;margin-right: 10px;" onclick="add_menu2(this)">添加二级分类</button>
+                    </div>
+                {% empty %}
+                    <p id="tip1">还没有一级菜单，请点击添加按钮进行添加</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 

@@ -211,41 +211,37 @@
     <!-- //container -->
 </div>
 <!-- //banner -->
-<!-- welcome -->
-<div class="welcome">
-    <div class="row">
-        <div class="col-lg-offset-2 col-sm-offset-1 col-lg-8 col-sm-10">
-            <h2 class="module1_title">{% if module1 %}{{ module1.title }}{% else %}首页模块一标题{% endif %}</h2>
-            <div class="col-lg-offset-2 col-lg-4 col-sm-12">
-                <ul>
-                    {% for article in module1.ariticles_left %}
-                        <li><a href="{% url 'article' article.id %}">{{article.title}}</a></li>
-                    {% empty %}
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
+
+
+
+{% if module1 %}
+    <div class="welcome">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+                <h2 class="module1_title">{{ module1.category.name }}</h2>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    {% for article in module1_left_articles %}
+                        <a href="{% url 'article' article.id %}" style="text-align: left;">
+                            <div class="col-xs-7"><p>{{article.title}}</p></div>
+                            <div class="col-xs-5" style="color: black;"><p>{{article.modified_time.date}}</p></div>
+                        </a>
                     {% endfor %}
-                </ul>
-            </div>
-            <div class="col-lg-6 col-sm-12">
-                <ul>
-                    {% for article in module1.ariticles_right %}
-                        <li><a href="{% url 'article' article.id %}">{{article.title}}</a></li>
-                    {% empty %}
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    {% for article in module1_right_articles %}
+                        <a href="{% url 'article' article.id %}" style="text-align: left;">
+                            <div class="col-xs-7"><p>{{article.title}}</p></div>
+                            <div class="col-xs-5" style="color: black;"><p>{{article.modified_time.date}}</p></div>
+                        </a>
                     {% endfor %}
-                </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- //welcome -->
+{% endif %}
+
+
+
 <!-- slider -->
 <div class="slider">
     <div class="arrival-grids wthree-grids">
@@ -259,6 +255,11 @@
                 </li>
             {% empty %}
                 <li><a><img src="/static/images/s1.jpg" alt=""/></a><p class="bottom_hr">文章标题</p></li>
+                <li><a><img src="/static/images/s2.jpg" alt=""/></a><p class="bottom_hr">文章标题</p></li>
+                <li><a><img src="/static/images/s3.jpg" alt=""/></a><p class="bottom_hr">文章标题</p></li>
+                <li><a><img src="/static/images/s4.jpg" alt=""/></a><p class="bottom_hr">文章标题</p></li>
+                <li><a><img src="/static/images/s5.jpg" alt=""/></a><p class="bottom_hr">文章标题</p></li>
+                <li><a><img src="/static/images/s6.jpg" alt=""/></a><p class="bottom_hr">文章标题</p></li>
             {% endfor %}
         </ul>
         <script type="text/javascript">
@@ -292,37 +293,50 @@
 </div>
 <!-- //slider -->
 
-<div class="welcome">
-    <div class="row">
-        <div class="col-lg-offset-2 col-sm-offset-1 col-lg-8 col-sm-10">
-            <h2 class="module1_title">{% if module1 %}{{ module1.title }}{% else %}首页模块二标题{% endif %}</h2>
-            <div class="col-lg-offset-2 col-lg-4 col-sm-12">
-                <ul>
-                    {% for article in module2.ariticles_left %}
-                        <li><a href="{% url 'article' article.id %}">{{article.title}}</a></li>
-                    {% empty %}
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
+
+
+{% if module2 %}
+    <div class="welcome">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+                <h2 class="module1_title">{{ module2.category.name }}</h2>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    {% for article in module2_left_articles %}
+                        <div style="width: 100%;height: 80px;" class="bottom_hr">
+                            <a href="{% url 'article' article.id %}">
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <img src="{{ article.cover_img.url }}" style="width: 100%;"/>
+                                </div>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="text-align: left">
+                                    <p>{{article.title}}</p>
+                                    <p>{{ article.modified_time }}</p>
+                                </div>
+                            </a>
+                        </div>
                     {% endfor %}
-                </ul>
-            </div>
-            <div class="col-lg-6 col-sm-12">
-                <ul>
-                    {% for article in module2.ariticles_right %}
-                        <li><a href="{% url 'article' article.id %}">{{article.title}}</a></li>
-                    {% empty %}
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
-                        <li><a>文章标题</a></li>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    {% for article in module2_right_articles %}
+                        <div style="width: 100%;height: 80px;" class="bottom_hr">
+                            <a href="{% url 'article' article.id %}">
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <img src="{{ article.cover_img.url }}" style="width: 100%;"/>
+                                </div>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="text-align: left">
+                                    <p>{{article.title}}</p>
+                                    <p>{{ article.modified_time }}</p>
+                                </div>
+                            </a>
+                        </div>
                     {% endfor %}
-                </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
+{% endif %}
+
+
+
 
 {% if company.big_img %}
     <div class="news-bottom" style="background: url({{ company.big_img.url }}) no-repeat center fixed;">

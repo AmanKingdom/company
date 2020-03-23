@@ -58,7 +58,7 @@ class Article(models.Model):
     cover_img = models.ImageField('封面图片', upload_to='images/article_cover_img')
     publish_time = models.DateTimeField('第一次发布时间', auto_now_add=True)
     modified_time = models.DateTimeField('最新修改时间', auto_now=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, verbose_name='文章分类')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, verbose_name='文章分类', related_name='articles')
     view_number = models.PositiveIntegerField('阅读量', default=0)
 
     def get_pure_content(self):

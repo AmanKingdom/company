@@ -42,3 +42,9 @@ class CarouselAdmin(ModelAdmin):
 class ViewNumberAdmin(ModelAdmin):
     list_display = ('id', 'ip', 'number', 'create_time', 'modified_time')
     list_editable = ['ip', 'number']
+
+
+@admin.register(Module)
+class ModuleAdmin(ModelAdmin):
+    list_display = ('id', 'name')
+    list_editable = ['name', ]
