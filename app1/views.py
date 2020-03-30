@@ -90,7 +90,7 @@ def homepage(request):
     set_module_and_articles(context, 'module1')
     set_module_and_articles(context, 'module2')
 
-    return render(request, 'index.html', context=context, status=status.HTTP_200_OK)
+    return render(request, 'app1/index.html', context=context, status=status.HTTP_200_OK)
 
 
 def set_current_menus(context, current_menu):
@@ -113,7 +113,7 @@ def article(request, id):
     add_view_number(request, context['article'])
     set_current_menus(context, context['article'].category)
 
-    return render(request, 'article.html', context=context, status=status.HTTP_200_OK)
+    return render(request, 'app1/article.html', context=context, status=status.HTTP_200_OK)
 
 
 def category(request, id):
@@ -133,7 +133,7 @@ def category(request, id):
         context['article'] = context['articles'][0]
         add_view_number(request, context['article'])
 
-    return render(request, 'article.html', context=context, status=status.HTTP_200_OK)
+    return render(request, 'app1/article.html', context=context, status=status.HTTP_200_OK)
 
 
 def search(request):
@@ -152,6 +152,6 @@ def search(request):
                 if keyword in art.get_pure_content() or keyword in art.title:
                     context['articles'].append(art)
 
-            return render(request, 'search_result.html', context=context)
+            return render(request, 'app1/search_result.html', context=context)
     except:
         return HttpResponseRedirect('/')

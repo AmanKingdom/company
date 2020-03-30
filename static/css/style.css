@@ -30,7 +30,7 @@ body a:hover{
 }
 /*-- header-top --*/
 .header-top{
-	background: #07C160;
+	background: #495A80;
     padding: 1em 0;
 }
 .social{
@@ -45,19 +45,19 @@ body a:hover{
     margin: 0;
 }
 .social ul li a.facebook{
-    background: url(../images/social.png) no-repeat 0px 0px;
+    background: url(../images/default/social.png) no-repeat 0px 0px;
     width: 30px;
     height: 30px;
     display: block;
 }
 .social ul li a.twitter{
-    background: url(../images/social.png) no-repeat -30px 0px;
+    background: url(../images/default/social.png) no-repeat -30px 0px;
 }
 .social ul li a.chrome{
-    background: url(../images/social.png) no-repeat -60px 0px;
+    background: url(../images/default/social.png) no-repeat -60px 0px;
 }
 .social ul li a.dribbble{
-    background: url(../images/social.png) no-repeat -90px 0px;
+    background: url(../images/default/social.png) no-repeat -90px 0px;
 }
 .social ul li a.facebook:hover{
 	opacity:.5;
@@ -88,7 +88,7 @@ body a:hover{
     -ms-transition: 0.5s all;
 }
 .w3layouts-details ul li a:hover{
-    color: #000; 
+    color: #000;
 }
 .glyphicon-earphone, .glyphicon-envelope {
     font-size: 1em;
@@ -98,10 +98,10 @@ body a:hover{
     padding: 1em 0 3em;
     background: #fff;
     position: relative;
-    border-bottom: solid 10px #07C160;
+    border-bottom: solid 10px #495A80;
 }
 .w3ls-logo{
-    float: left; 
+    float: left;
 }
 .w3ls-logo h1{
 	margin:0;
@@ -115,7 +115,7 @@ body a:hover{
     font-weight: 600;
 	display: inline-block;
 }
-.w3ls-logo h1 a span { 
+.w3ls-logo h1 a span {
 	font-weight:100;
 	letter-spacing: 2px;
 }
@@ -136,7 +136,7 @@ body a:hover{
 }
 .header-top-right form input[type="submit"] {
     color: #FFF;
-    background: #2b2b2b url(../images/search.png) no-repeat center;
+    background: #2b2b2b url(../images/default/search.png) no-repeat center;
     float: left;
     border: none;
     outline: none;
@@ -151,9 +151,9 @@ body a:hover{
 	transition:.5s all;
 }
 .header-top-right form input[type="submit"]:hover {
-    background-color: #07C160;
+    background-color: #495A80;
 }
-.top-nav { 
+.top-nav {
     position: absolute;
     margin: 1em 0 0 0;
 	background:#2B2B2B;
@@ -177,7 +177,7 @@ div#menu_list {
 .top-nav ul li{
     display: inline-block;
     margin: 0 !important;
-    float: none;	
+    float: none;
 }
 .glyphicon-home {
     font-size: 1em;
@@ -200,17 +200,17 @@ div#menu_list {
 	outline:none;
 }
 .top-nav ul li a:hover,.top-nav ul li a.active{
-    color: #07C160 !important;
-} 
+    color: #495A80 !important;
+}
 .top-nav ul li.home-icon{
     margin-left: 0 !important;
 }
 .top-nav ul li.home-icon a,.top-nav ul li.home-icon a:focus{
-    background: #07C160;
+    background: #495A80;
 	outline:none;
-} 
+}
 .top-nav ul li.home-icon a:hover {
-    background: #07C160;
+    background: #495A80;
 }
 .caret {
     margin-left: 3px;
@@ -276,7 +276,7 @@ ul.dropdown-menu {
 
 .dropdown-submenu.pull-left {
     float: none;
-} 
+}
 .dropdown-submenu.pull-left>.dropdown-menu {
     left: -100%;
     margin-left: 10px;
@@ -292,7 +292,7 @@ ul.dropdown-menu {
     position:relative;
 }
 /* Login Button */
-#loginButton {  
+#loginButton {
     position:relative;
     z-index:30;
     cursor:pointer;
@@ -339,7 +339,7 @@ fieldset#body {
     margin:3px 6px 0 0;
     float:left;
     padding:0;
-    border:0; 
+    border:0;
 }
 #body label {
     color:#87807c;
@@ -356,7 +356,7 @@ fieldset#body {
 	text-align: left;
 }
 #body label i {
-    color:#07C160;
+    color:#495A80;
     font-size: 1em;
     font-weight: 400;
 }
@@ -372,11 +372,11 @@ fieldset#body {
 }
 /* Sign In Button */
 #loginForm #login {
-    background: #07C160;
+    background: #495A80;
     color: #fff;
     font-size: 1em;
     padding: 5px 20px;
-    border: 1px solid #07C160; 
+    border: 1px solid #495A80;
     transition: all .5s;
     -webkit-transition: all .5s;
     -moz-transition: all .5s;
@@ -384,7 +384,7 @@ fieldset#body {
 }
 #loginForm #login:hover {
     background: #fff;
-    color:#07C160; 
+    color:#495A80;
 }
 /* Forgot your password */
 #loginForm span {
@@ -400,7 +400,7 @@ fieldset#body {
 }
 #loginForm span a:hover{
     text-decoration: none;
-    color: #07C160 !important;
+    color: #495A80 !important;
 }
 input:focus {
     outline:none;
@@ -424,7 +424,7 @@ input:focus {
     font-family: 'Open Sans Condensed', sans-serif;
 }
 .banner-w3text h5{
-    color:#07C160;
+    color:#495A80;
     font-size: 1em;
     margin: 1em 0 2em 0;
     font-weight: 600;
@@ -438,20 +438,20 @@ input:focus {
 }
 .banner-buttons {
     margin: 2em 0 0;
-}   
+}
 .banner-button a {
-    background:#07C160;
+    background:#495A80;
     color: #FFF;
     font-size: 1em;
     padding: .5em 3em;
     text-decoration: none;
-    border: solid 2px #07C160;
+    border: solid 2px #495A80;
     letter-spacing: 1px;
 	display: inline-block;
 }
-.banner-button a:hover { 
+.banner-button a:hover {
     background: none !important;
-    color:#07C160 !important;
+    color:#495A80 !important;
 }
 .banner-agileinfo{
 	position:relative;
@@ -646,7 +646,7 @@ position: absolute;
 ul.social-slide li i{
 	width:70px;
 	height:74px;
-	background:url(../images/img-resources.png)no-repeat;
+	background:url(../images/default/img-resources.png)no-repeat;
 	display: inline-block;
 	margin:0px 15px;
 }
@@ -690,8 +690,8 @@ ul.social-slide li i.mac{
     -ms-border-radius: 30px;
 }
 .callbacks_here a:after,.callbacks_here a:hover:after{
-    border-color:#07C160;
-    background: #07C160;
+    border-color:#495A80;
+    background: #495A80;
 }
 /*-- welcome --*/
 .welcome {
@@ -705,7 +705,7 @@ ul.social-slide li i.mac{
 .agileits-title{
     font-size: 5em;
     margin: 0;
-    color: #07C160;
+    color: #495A80;
     text-align: center;
     font-family: 'Open Sans Condensed', sans-serif;
     font-weight: 100;
@@ -764,7 +764,7 @@ ul#flexiselDemo1 li a h4{
 ul#flexiselDemo1 li a h4:hover{
 	color: #DBC585;
 }
-.nbs-flexisel-item > a img {	
+.nbs-flexisel-item > a img {
 	cursor: auto;
     position: relative;
     width: 100%;
@@ -780,18 +780,18 @@ ul#flexiselDemo1 li a h4:hover{
 }
 .nbs-flexisel-nav-left {
     left: 0;
-    background: url(../images/img-sprite-left-right.png) no-repeat 0px 0px;
+    background: url(../images/default/img-sprite-left-right.png) no-repeat 0px 0px;
 }
 .nbs-flexisel-nav-right {
 	right: 0px;
-	background: url(../images/img-sprite-left-right.png) no-repeat -54px 0px;
+	background: url(../images/default/img-sprite-left-right.png) no-repeat -54px 0px;
 }
 /*-- news --*/
 .news {
     padding: 5em 0;
 }
 .news-info h3,.news-w3agileitsinfo h3,.about-w3grid h3, .about-team h3, .choose h3 {
-    color: #07C160;
+    color: #495A80;
     font-size: 4em;
     margin: 0;
     text-align: center;
@@ -836,7 +836,7 @@ ul#flexiselDemo1 li a h4:hover{
 	text-decoration:none;
 }
 .date-info a:hover{
-    color: #07C160;
+    color: #495A80;
 }
 .date-info p{
     font-size: .9em;
@@ -864,17 +864,17 @@ ul#flexiselDemo1 li a h4:hover{
 }
 .news-button a,.choose-button a {
     background: none;
-    color:#07C160;
+    color:#495A80;
     font-size: 1em;
     padding: .5em 3em;
     text-decoration: none;
-    border: solid 2px#07C160;
+    border: solid 2px#495A80;
     letter-spacing: 1px;
 	display: inline-block;
 }
 .news-button a:hover,.choose-button a:hover{
-	border: solid 2px#07C160 !important;
-    background: #07C160 !important;
+	border: solid 2px#495A80 !important;
+    background: #495A80 !important;
     color: #FFFFFF !important;
 }
 /*-- news-bottom --*/
@@ -883,7 +883,7 @@ ul#flexiselDemo1 li a h4:hover{
     background-size: cover;
 }
 .news-w3agileitsinfo{
-    background: #07C160;
+    background: #495A80;
     padding: 4em;
     width: 50%;
 }
@@ -908,7 +908,7 @@ ul#flexiselDemo1 li a h4:hover{
 	text-align: center;
 	float:left;
 }
-.w3-agileitsicons ul{ 
+.w3-agileitsicons ul{
 	padding:0;
 	margin:0;
 }
@@ -917,7 +917,7 @@ ul#flexiselDemo1 li a h4:hover{
     margin: 0 0.3em;
 }
 .w3-agileitsicons ul a {
-    color: #07C160;
+    color: #495A80;
     background: #fff;
     text-align: center;
     display: inline-block;
@@ -955,7 +955,7 @@ ul#flexiselDemo1 li a h4:hover{
 .f-address p.number{
     font-size: 2em;
     margin: 1em 0 0 0;
-    color: #07C160;
+    color: #495A80;
 }
 .copyright{
 	margin:2em 0 0 0;
@@ -971,7 +971,7 @@ ul#flexiselDemo1 li a h4:hover{
 	text-decoration:none;
 }
 .copyright p a:hover{
-	color:#07C160;
+	color:#495A80;
 }
 .footer-right{
 	float:right;
@@ -1002,7 +1002,7 @@ ul#flexiselDemo1 li a h4:hover{
 }
 .footer-right input[type="submit"] {
     color: #FFF;
-    background: #07C160;
+    background: #495A80;
     font-size: .9em;
     width: 30% !important;
     border: none;
@@ -1049,7 +1049,7 @@ ul#flexiselDemo1 li a h4:hover{
 }
 .team-grid h6 {
     font-size: 1em;
-    color: #07C160;
+    color: #495A80;
     margin: 1em 0 1em 0;
     text-transform: capitalize;
     font-weight: 600;
@@ -1070,8 +1070,8 @@ ul#flexiselDemo1 li a h4:hover{
     border-color: #ccc;
 }
 .team-w3icons.w3-agileitsicons ul li a:hover{
-    color: #07C160;
-    border-color: #07C160;
+    color: #495A80;
+    border-color: #495A80;
 }
 /*-- choose --*/
 .choose {
@@ -1097,7 +1097,7 @@ ul#flexiselDemo1 li a h4:hover{
 	margin:2em 0 0 0;
 }
 /*-- //about --*/
-/*-- Short-codes --*/ 
+/*-- Short-codes --*/
 .well {
     font-weight: 300;
     font-size: 14px;
@@ -1141,14 +1141,14 @@ li.list-group-item1 {
 	font-weight: 300;
 }
 .grid_4{
-	background:none; 
+	background:none;
 }
 .label {
 	font-weight: 300 !important;
 	border-radius:4px;
-}  
+}
 .grid_5{
-	background:none; 
+	background:none;
 }
 .grid_5 h3, .grid_5 h2, .grid_5 h1, .grid_5 h4, .grid_5 h5, h3.w3ls-hdg, h3.bars {
 	margin-bottom: 1em;
@@ -1244,7 +1244,7 @@ ol {
 }
 h2.typoh2{
     margin: 0 0 10px;
-} 
+}
 .tab-content > .active {
   display: block;
   visibility: visible;
@@ -1259,7 +1259,7 @@ h2.typoh2{
 }
 .nav-tabs {
   margin-bottom: 1em;
-} 
+}
 h1.t-button,h2.t-button,h3.t-button,h4.t-button,h5.t-button {
 	line-height:1.8em;
 	margin-top:0.5em;
@@ -1333,7 +1333,7 @@ h2.typoh2{
     -ms-transition: 0.5s all;
     -moz-transition: 0.5s all;
     cursor: pointer;
-} 
+}
 .icon-box:hover {
     background: #000;
 	transition:0.5s all;
@@ -1352,11 +1352,11 @@ h2.typoh2{
     float: left;
     width: 12.5%;
     height: 115px;
-    padding: 10px; 
+    padding: 10px;
     line-height: 1.4;
-    text-align: center;  
+    text-align: center;
     font-size: 12px;
-    list-style-type: none;	
+    list-style-type: none;
 }
 .codes .bs-glyphicons .glyphicon {
     margin-top: 5px;
@@ -1374,7 +1374,7 @@ h2.typoh2{
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 	color: #777;
-} 
+}
 .codes .bs-glyphicons .glyphicon-class {
     display: block;
     text-align: center;
@@ -1388,7 +1388,7 @@ h3.icon-subheading {
 .agileits-icons-title {
     text-align: center;
     font-size: 36px;
-    color: #07C160;
+    color: #495A80;
     font-weight: 300;
 }
 .icons a {
@@ -1428,7 +1428,7 @@ h3.icon-subheading {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 	color: #777;
-} 
+}
 .icons .bs-glyphicons .glyphicon-class {
     display: block;
     text-align: center;
@@ -1449,7 +1449,7 @@ h3.icon-subheading {
 }
 .nav-tabs {
   margin-bottom: 1em;
-} 
+}
 h1.t-button,h2.t-button,h3.t-button,h4.t-button,h5.t-button {
 	line-height:1.8em;
 	margin-top:0.5em;
@@ -1505,7 +1505,7 @@ h2.typoh2{
 }
 @media (max-width:1080px){
 .icon-box {
-    padding: 8px 9px; 
+    padding: 8px 9px;
 }
 }
 @media (max-width:768px){
@@ -1581,17 +1581,17 @@ h2.typoh2{
 	.grid_3.grid_4.w3layouts {
 		margin-top: 0;
 	}
-	.agileits-icons-title {  
-		font-size: 30px; 
+	.agileits-icons-title {
+		font-size: 30px;
 	}
 	h3.icon-subheading {
-		font-size: 22px; 
+		font-size: 22px;
 	}
-	.icons .bs-glyphicons li { 
-		width: 31%; 
-	} 
+	.icons .bs-glyphicons li {
+		width: 31%;
+	}
 }
-@media (max-width: 320px){ 
+@media (max-width: 320px){
 	.alert,ol.breadcrumb li, .grid_3 p,.well, ul.list-group li, li.list-group-item1,a.list-group-item {
 		font-size: 13px;
 	}
@@ -1618,7 +1618,7 @@ h2.typoh2{
 	.codes .row {
 		margin: 0;
 	}
-	.agileits-icons-title { 
+	.agileits-icons-title {
 		font-size: 25px;
 	}
 	h3.icon-subheading {
@@ -1626,7 +1626,7 @@ h2.typoh2{
 		margin: 21px 0 12px;
 	}
 }
-/*-- //Short-codes --*/  
+/*-- //Short-codes --*/
 /*-- gallery --*/
 .gallery-top {
     padding: 5em 0;
@@ -1696,12 +1696,12 @@ h2.typoh2{
 	display: inline-block;
 }
 .agile-address a {
-    color: #777; 
+    color: #777;
     letter-spacing: 1px;
     transition: .5s all;
 }
 .agile-address a:hover {
-	color:#07C160;
+	color:#495A80;
 	text-decoration: none;
 }
 .contact-agileinfom p {
@@ -1709,7 +1709,7 @@ h2.typoh2{
     font-size: 0.9em;
     color: #777;
     line-height: 1.8em;
-} 
+}
 .contact-form input[type="text"] {
 	display: inline-block;
 	background: none;
@@ -1751,7 +1751,7 @@ h2.typoh2{
 button.btn1.btn-1.btn-1b {
     color: #FFF;
     border: none;
-    background: #07C160;
+    background: #495A80;
     padding: .5em 3em;
     font-size: 1em;
     outline: none;
@@ -1778,12 +1778,12 @@ button.btn1.btn-1.btn-1b:hover {
 .Categories h3,.Categories h2.agileits-title{
 	font-size: 2em;
     margin: 0 0 1em 0;
-    color: #07C160;
+    color: #495A80;
     font-family: 'Open Sans Condensed', sans-serif;
 	text-align: left;
 }
-.Categories h2.agileits-title{ 
-    margin: 1.5em 0 1em; 
+.Categories h2.agileits-title{
+    margin: 1.5em 0 1em;
 }
 .Categories ul{
 	margin:0;
@@ -1791,7 +1791,7 @@ button.btn1.btn-1.btn-1b:hover {
 }
 .Categories ul li{
     display: block;
-    background: url(../images/arrow.png) no-repeat 0px 2px;
+    background: url(../images/default/arrow.png) no-repeat 0px 2px;
     margin-bottom: 1em;
 }
 .Categories ul li a{
@@ -1801,7 +1801,7 @@ button.btn1.btn-1.btn-1b:hover {
 	padding-left: 2em;
 }
 .Categories ul li a:hover{
-  color: #07C160;
+  color: #495A80;
   text-decoration: none;
   transition: .5s all;
   -webkit-transition: .5s all;
@@ -1816,7 +1816,7 @@ button.btn1.btn-1.btn-1b:hover {
     font-size: 1.5em;
     margin: 0 0 1em 0;
     padding-bottom: .5em;
-    color: #07C160;
+    color: #495A80;
     font-family: 'CinzelDecorative-Regular';
 }
 .comments-left{
@@ -1862,7 +1862,7 @@ button.btn1.btn-1.btn-1b:hover {
 	line-height: 1.8em;
 }
 .single-left-left p a {
-    color: #07C160;
+    color: #495A80;
     text-decoration: none;
 }
 .single-left-left p a:hover{
@@ -1880,7 +1880,7 @@ button.btn1.btn-1.btn-1b:hover {
 .w3response h3 {
     font-size: 2em;
     margin: 0 0 1em 0;
-    color: #07C160;
+    color: #495A80;
     font-family: 'Open Sans Condensed', sans-serif;
 }
 .media.w3response-info {
@@ -1892,7 +1892,7 @@ button.btn1.btn-1.btn-1b:hover {
 }
 .media-left.w3response-text-left a img {
     width: 90%;
-} 
+}
 .w3response-text-left h5 {
     font-size: 1em;
     margin: 1em 0 0 0;
@@ -1902,7 +1902,7 @@ button.btn1.btn-1.btn-1b:hover {
 	color:#2B2B2B;
 }
 .w3response-text-left h5 a:hover{
-	color:#07C160;
+	color:#495A80;
 }
 .w3response-text-right p {
     color: #777;
@@ -1921,12 +1921,12 @@ button.btn1.btn-1.btn-1b:hover {
     margin-right: 1em;
 }
 .w3response-text-right ul li a {
-    color: #07C160;
+    color: #495A80;
     font-size: .9em;
     text-decoration: none;
 }
 .w3response-text-right ul li a:hover{
-    color: #777; 
+    color: #777;
 }
 .media.w3response-info {
     margin-top: 3em;
@@ -1934,7 +1934,7 @@ button.btn1.btn-1.btn-1b:hover {
 .agileits-opinion h3{
     font-size: 2em;
     margin: 0 0 1em 0;
-    color: #07C160;
+    color: #495A80;
     font-family: 'Open Sans Condensed', sans-serif;
 }
 .agileits-opinion form input[type="text"] {
@@ -1969,7 +1969,7 @@ button.btn1.btn-1.btn-1b:hover {
   -webkit-appearance: none;
 }
 .agileits-opinion form input[type="submit"]:hover {
-	color:#07C160;
+	color:#495A80;
 	transition: .5s all;
 	-webkit-transition: .5s all;
 	-moz-transition: .5s all;
@@ -1993,12 +1993,12 @@ button.btn1.btn-1.btn-1b:hover {
 	bottom: 14px;
 	right: 2%;
 	overflow: hidden;
-	z-index: 999; 
+	z-index: 999;
 	width: 40px;
 	height: 40px;
 	border: none;
 	text-indent: 100%;
-	background: url("../images/up-arrow.png") no-repeat 0px 0px;
+	background: url("../images/default/up-arrow.png") no-repeat 0px 0px;
 }
 #toTopHover {
 	width: 40px;
@@ -2021,7 +2021,7 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.date p {
 		font-size: 2em;
-	} 
+	}
 	.news-info h3, .news-w3agileitsinfo h3, .about-w3grid h3, .about-team h3, .choose h3 {
 		font-size: 3em;
 	}
@@ -2056,7 +2056,7 @@ button.btn1.btn-1.btn-1b:hover {
 	.top-nav ul li.login {
 		margin-left: 16% !important;
 	}
-	.header-top-right { 
+	.header-top-right {
 		width: 30%;
 	}
 	#loginBox {
@@ -2067,7 +2067,7 @@ button.btn1.btn-1.btn-1b:hover {
 		margin: 10em 0;
 	}
 	.agileits-title {
-		font-size: 4em; 
+		font-size: 4em;
 	}
 	.welcome-info {
 		width: 80%;
@@ -2079,7 +2079,7 @@ button.btn1.btn-1.btn-1b:hover {
 		margin: 1em 0;
 	}
 	.footer {
-		padding: 3em 0; 
+		padding: 3em 0;
 	}
 	.about-bottom {
 		margin: 3em 0;
@@ -2087,8 +2087,8 @@ button.btn1.btn-1.btn-1b:hover {
 	.date {
 		float: left;
 	}
-	.about-w3grid h5 { 
-		margin: 1em 0; 
+	.about-w3grid h5 {
+		margin: 1em 0;
 	}
 	.choose-button {
 		margin: 1em 0 0 0;
@@ -2143,8 +2143,8 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 }
 @media (max-width:900px){
-	.w3ls-logo h1 a { 
-		font-size: 1.6em; 
+	.w3ls-logo h1 a {
+		font-size: 1.6em;
 	}
 	.top-nav {
 		width: 83%;
@@ -2152,12 +2152,12 @@ button.btn1.btn-1.btn-1b:hover {
 	.f-address {
 		margin: 2em 0;
 	}
-	.f-address p.number { 
-		margin: 0.5em 0 0 0; 
+	.f-address p.number {
+		margin: 0.5em 0 0 0;
 	}
 	.gallery-w3agileits-row {
 		margin: 3em 0 0 0;
-	} 
+	}
 }
 @media (max-width:800px){
 	.top-nav {
@@ -2168,11 +2168,11 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.agileits-title {
 		font-size: 3.5em;
-	} 
+	}
 	.news-grids {
 		margin: 3em 0 0 0;
 	}
-	.w3-agileitsicons ul li { 
+	.w3-agileitsicons ul li {
 		margin: 0 0.1em;
 	}
 }
@@ -2182,10 +2182,10 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.banner-w3text {
 		margin: 7em 0 9em 0;
-	}  
+	}
 	.news-grids {
 		margin: 3em 0 0 0;
-	} 
+	}
 	.about-bottom {
 		margin: 1em 0;
 	}
@@ -2197,14 +2197,14 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.gallery-top {
 		padding: 3em 0;
-	} 
+	}
 	.agile-address {
 		margin: 2em 0 0;
 	}
-	.rslides li { 
-		left: 40px; 
-	} 
-}	
+	.rslides li {
+		left: 40px;
+	}
+}
 @media (max-width:767px){
 	.top-nav {
 		position: inherit;
@@ -2223,7 +2223,7 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
 	    background: none;
-		border: none; 
+		border: none;
 	}
 	.navbar-toggle {
 		float: none;
@@ -2233,7 +2233,7 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.navbar-default {
 		text-align: center;
-	} 
+	}
 	.top-nav ul li {
 		display: block;
 		margin: .6em 0 !important;
@@ -2264,7 +2264,7 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.top-nav ul {
 		padding: 0 0 1em 0;
-	} 
+	}
 	.top-nav ul li.home-icon a {
 		padding: 1em !important;
 	}
@@ -2290,7 +2290,7 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.banner-w3text {
 		margin: 6em 0;
-	} 
+	}
 	.welcome-info {
 		width: 100%;
 	}
@@ -2311,8 +2311,8 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 }
 @media (max-width:667px){
-	.callbacks_tabs { 
-		right: 53px; 
+	.callbacks_tabs {
+		right: 53px;
 	}
 }
 @media (max-width:640px){
@@ -2322,9 +2322,9 @@ button.btn1.btn-1.btn-1b:hover {
 	.header-top-right {
 		width: 35%;
 	}
-	.banner-w3text h3 { 
-		font-size: 1.3em; 
-		letter-spacing: 3px; 
+	.banner-w3text h3 {
+		font-size: 1.3em;
+		letter-spacing: 3px;
 	}
 	.Categories h2.agileits-title {
 		margin: 1em 0 1em;
@@ -2332,10 +2332,10 @@ button.btn1.btn-1.btn-1b:hover {
 }
 @media (max-width:600px){
 	.welcome-info h5 {
-		font-size: 1.1em; 
+		font-size: 1.1em;
 		margin: 1.1em 0 0.8em;
 	}
-	.contact-form input[type="email"] { 
+	.contact-form input[type="email"] {
 		margin: 0 1em;
 	}
 	.contact-form input[type="text"] {
@@ -2368,7 +2368,7 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.banner-w3text p {
 		font-size: .8em;
-	}  
+	}
 	.agileits-title{
 		font-size: 3em;
 	}
@@ -2409,7 +2409,7 @@ button.btn1.btn-1.btn-1b:hover {
 	.footer-right input[type="text"] {
 		width: 67% !important;
 	}
-	.f-address p.text { 
+	.f-address p.text {
 		width: 100%;
 	}
 	.about-w3grid {
@@ -2420,7 +2420,7 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.choose-w3layoutsinfo {
 		margin: 2em 0 0;
-	} 
+	}
 	.contact-form input[type="text"] {
 		width: 100%;
 	}
@@ -2428,19 +2428,19 @@ button.btn1.btn-1.btn-1b:hover {
 		width: 100%;
 		margin: 0 0 1.5em 0;
 	}
-	.choose-grid p { 
-		margin: 0.8em 0; 
+	.choose-grid p {
+		margin: 0.8em 0;
 	}
-	.banner-button a { 
-		font-size: 0.9em; 
+	.banner-button a {
+		font-size: 0.9em;
 	}
-	.banner-w3text h5 { 
-		margin: 1em 0; 
+	.banner-w3text h5 {
+		margin: 1em 0;
 	}
 	.welcome, .news, .about, .contact,.gallery-top,.blog{
 		padding: 2.5em 0;
 	}
-	.gallery-wthreegrid { 
+	.gallery-wthreegrid {
 		margin-bottom: 1em;
 		padding: 0 .5em;
 	}
@@ -2448,7 +2448,7 @@ button.btn1.btn-1.btn-1b:hover {
 		margin: 1em 0 0 0;
 	}
 	.f-address p.number {
-		font-size: 1.5em; 
+		font-size: 1.5em;
 	}
 	.w3layouts-details ul li:nth-child(1) {
 		margin-right: 0;
@@ -2462,21 +2462,21 @@ button.btn1.btn-1.btn-1b:hover {
 	.contact-agileinfom {
 		margin: 2em 0;
 	}
-	.contact h4 { 
-		font-size: 1.2em; 
+	.contact h4 {
+		font-size: 1.2em;
 		margin: 0 0 0.5em;
 	}
-	.navbar-default .navbar-toggle { 
-		padding: 9px 10px; 
+	.navbar-default .navbar-toggle {
+		padding: 9px 10px;
 	}
-	.top-nav ul li a { 
+	.top-nav ul li a {
 		font-size: 0.9em;
-	} 
+	}
 	#loginForm {
-		width: 85%; 
+		width: 85%;
 	}
 	.header {
-		padding: 1em 0; 
+		padding: 1em 0;
 	}
 	.banner-w3text {
 		margin: 5em 0;
@@ -2487,11 +2487,11 @@ button.btn1.btn-1.btn-1b:hover {
 	.w3response {
 		margin: 2em 0;
 	}
-	.agileits-opinion form input[type="text"],.agileits-opinion form textarea{ 
-		font-size: 0.9em; 
+	.agileits-opinion form input[type="text"],.agileits-opinion form textarea{
+		font-size: 0.9em;
 	}
 	.media-left.w3response-text-left {
-		width: 19%; 
+		width: 19%;
 	}
 	.media-left.w3response-text-left a img {
 		width: 100%;
@@ -2515,8 +2515,8 @@ button.btn1.btn-1.btn-1b:hover {
 	.banner-buttons {
 		margin: 1em 0 0;
 	}
-	.banner-w3text h5 { 
-		font-size: 0.9em; 
+	.banner-w3text h5 {
+		font-size: 0.9em;
 	}
 	/*.agileits-title {*/
 	/*	font-size: 2.5em;*/
@@ -2525,8 +2525,8 @@ button.btn1.btn-1.btn-1b:hover {
 		font-size: 0.9em;
 		line-height: 1.6em;
 	}
-	.welcome-info p { 
-		font-size: .8em; 
+	.welcome-info p {
+		font-size: .8em;
 	}
 	.news-grids {
 		margin: 2em 0 0 0;
@@ -2542,12 +2542,12 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.date-info p {
 		font-size: .8em;
-		margin: 1em 0; 
+		margin: 1em 0;
 	}
-	.news-button a, .choose-button a { 
+	.news-button a, .choose-button a {
 		font-size: 0.8em;
-		padding: .4em 2.5em; 
-	} 
+		padding: .4em 2.5em;
+	}
 	.news-w3agileitsinfo {
 		width: 90%;
 		padding: 2em;
@@ -2555,42 +2555,42 @@ button.btn1.btn-1.btn-1b:hover {
 	.news-w3agileitsinfo h3 {
 		font-size: 1.6em !important;
 	}
-	.footer-right h5 { 
+	.footer-right h5 {
 		margin: 0 0 0.6em 0;
-		font-size: 2.2em; 
+		font-size: 2.2em;
 	}
-	.footer-right { 
+	.footer-right {
 		padding: 0;
 	}
 	.w3-agileitsicons ul li a i.fa {
-		font-size: 0.8em; 
+		font-size: 0.8em;
 		width: 25px;
-		height: 25px; 
+		height: 25px;
 	}
 }
 @media (max-width:384px){
 	.w3layouts-details ul li {
 		font-size: .85em;
-	}  
+	}
 	.w3ls-logo h1 a {
 		font-size: 1.1em;
 	}
-	.w3ls-logo h1 a span { 
+	.w3ls-logo h1 a span {
 		letter-spacing: 0px;
 	}
-	.glyphicon-earphone, .glyphicon-envelope { 
+	.glyphicon-earphone, .glyphicon-envelope {
 		margin-right: 0.8em;
 	}
 	.header-top-right {
 		width: 50%;
 		margin: 0.5em 0 0 0;
-	} 
-	.header-top-right form input[type="text"] { 
+	}
+	.header-top-right form input[type="text"] {
 		font-size: .8em;
 	}
-	.header-top-right form input[type="submit"] { 
-		padding: .35em 1.1em; 
-		margin-left: -2.2em; 
+	.header-top-right form input[type="submit"] {
+		padding: .35em 1.1em;
+		margin-left: -2.2em;
 		background-size: 45%;
 	}
 	.navbar-default .navbar-toggle {
@@ -2605,13 +2605,13 @@ button.btn1.btn-1.btn-1b:hover {
 	#loginForm {
 		width: 88%;
 		margin: 0 auto;
-	} 
+	}
 	.banner-w3text {
 		margin: 4em 0;
-	} 
+	}
 	.banner-w3text h5 {
 		margin: 1em 0 1em 0;
-	} 
+	}
 	.banner-w3text h3 {
 		font-size: 1.1em;
 		letter-spacing: 1px;
@@ -2627,7 +2627,7 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.banner-w3text p {
 		line-height: 1.5em;
-	}  
+	}
 	.agileits-title{
 		font-size: 2.2em;
 	}
@@ -2642,7 +2642,7 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.news-grids {
 		margin: 2em 0 0 0;
-	} 
+	}
 	.date-info p {
 		font-size: .8em;
 	}
@@ -2657,8 +2657,8 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.news-w3agileitsinfo h3 {
 		font-size: 1.5em !important;
-	} 
-	.footer-right h5 { 
+	}
+	.footer-right h5 {
 		font-size: 2em;
 	}
 	.footer-right input[type="text"] {
@@ -2683,7 +2683,7 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.copyright p {
 		font-size: .8em;
-	} 
+	}
 	.news-info h3, .news-w3agileitsinfo h3, .about-w3grid h3, .about-team h3, .choose h3 {
 		font-size: 2em;
 	}
@@ -2704,10 +2704,10 @@ button.btn1.btn-1.btn-1b:hover {
 		width: 100%;
 		margin-bottom: 1em;
 		padding: 0;
-	} 
+	}
 	.gallery-w3agileits-row {
 		margin: 1em 0 0 0;
-	}  
+	}
 	.contact-map iframe {
 		height: 180px;
 	}
@@ -2722,17 +2722,17 @@ button.btn1.btn-1.btn-1b:hover {
 	}
 	.contact-agileinfom {
 		margin: 1em 0;
-	} 
+	}
 	.contact-form input[type="text"],.contact-form input[type="email"],.contact-form textarea{
 		font-size: .8em;
 		margin-bottom: 1em;
-	} 
+	}
 	button.btn1.btn-1.btn-1b {
 		font-size: .9em;
-	}  
+	}
 	.footer-left {
 		margin-top: 1em;
-	} 
+	}
 	.team-grid {
 		float: none;
 		width: 100%;
@@ -2753,7 +2753,7 @@ button.btn1.btn-1.btn-1b:hover {
 	.typography-info {
 		margin-bottom: 1em;
 	}
-	.about-w3grid { 
+	.about-w3grid {
 		padding: 0;
 		margin: 0;
 	}
@@ -2761,11 +2761,11 @@ button.btn1.btn-1.btn-1b:hover {
 @media (max-width:320px){
 	.w3layouts-details ul li {
 		font-size: .72em;
-	}  
+	}
 	.w3ls-logo h1 a {
 		font-size: 1em;
 	}
-	.glyphicon-earphone, .glyphicon-envelope { 
+	.glyphicon-earphone, .glyphicon-envelope {
 		margin-right: 0.8em;
 	}
 	#loginForm:after {
@@ -2780,10 +2780,10 @@ button.btn1.btn-1.btn-1b:hover {
 	.choose-grid:nth-child(2) {
 		margin: 1em 0;
 	}
-	.top-nav ul li { 
+	.top-nav ul li {
 		margin: .2em 0 !important;
-	} 
-	.banner-w3text h3 { 
+	}
+	.banner-w3text h3 {
 		letter-spacing: 0px;
 	}
 	.banner-w3text p {
@@ -2802,45 +2802,45 @@ button.btn1.btn-1.btn-1b:hover {
 	.top-nav ul li.home-icon a {
 		padding: 0.6em !important;
 	}
-	.single-left-left p { 
-		font-size: 0.85em; 
+	.single-left-left p {
+		font-size: 0.85em;
 	}
 	.blog-left-bottom p {
-		font-size: .8em; 
+		font-size: .8em;
 	}
 	.media.w3response-info {
 		margin-top: 1.5em;
 	}
 	.media-left.w3response-text-left {
-		width: 35%; 
+		width: 35%;
 	}
-	.w3response-text-right p { 
-		font-size: .8em; 
+	.w3response-text-right p {
+		font-size: .8em;
 	}
 	.w3response h3,.agileits-opinion h3,.Categories h3, .Categories h2.agileits-title{
 		font-size: 1.8em;
-		margin: 0 0 0.6em 0; 
+		margin: 0 0 0.6em 0;
 	}
-	.media-left.w3response-text-left { 
+	.media-left.w3response-text-left {
 		float: none;
 		margin-bottom: .5em;
 	}
-	.w3response-text-right ul li { 
-		font-size: .8em; 
+	.w3response-text-right ul li {
+		font-size: .8em;
 	}
-	.w3response-text-right ul { 
+	.w3response-text-right ul {
 		text-align: left;
 	}
-	.w3response-text-right p { 
-		margin: 0 0 0.5em; 
+	.w3response-text-right p {
+		margin: 0 0 0.5em;
 	}
-	.agileits-opinion form input[type="text"],.agileits-opinion form textarea{ 
-		font-size: 0.85em; 
+	.agileits-opinion form input[type="text"],.agileits-opinion form textarea{
+		font-size: 0.85em;
 	}
 	.Categories ul li a {
-		font-size: .8em; 
+		font-size: .8em;
 		padding-left: 1.5em;
-	} 
+	}
 }
 
 
@@ -2851,7 +2851,7 @@ button.btn1.btn-1.btn-1b:hover {
 }
 
 .module1_title{
-    color: #07C160;
+    color: #495A80;
     margin-bottom: 18px;
     padding-bottom: 18px;
     border-bottom: 1px solid #efefef;
@@ -2884,13 +2884,13 @@ button.btn1.btn-1.btn-1b:hover {
     padding-left: 20px;
 }
 .active1{
-    border-left: 3px solid #07C160;
+    border-left: 3px solid #495A80;
 }
 .active1 a{
-    color: #07C160;
+    color: #495A80;
 }
 .active2{
-    background-color: #E9FAF1;
+    background-color: #B6BDCC;
 }
 
 

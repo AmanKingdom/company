@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="zh-hans">
+<head>
+    <title>{% if request.session.keyword %}搜索{{ request.session.keyword }}{% else %}搜索结果{% endif %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+    <link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="/static/css/font-awesome.css" rel="stylesheet">
+
+    <script src="/static/js/jquery-1.11.1.min.js"> </script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $(".scroll").click(function(event){
+                event.preventDefault();
+                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+            });
+        });
+    </script>
+    <script src="/static/js/menu_jquery.js"></script> <!-- pop-up -->
+</head>
+<body>
+<!-- header -->
+<div class="header">
+    <!-- container -->
+    <div class="container">
+        {% include 'app1/header_bottom.html' %}
+    </div>
+    <!-- //container -->
+</div>
+<!-- //header -->
+
+<div class="row" style="margin-bottom: 100px;">
+    <div class="col-sm-6 col-sm-offset-3">
+        <ul>
+            {% for article in articles %}
+                <a href="{% url 'article' article.id %}">
+                    {% include 'app1/article_list_item.html' %}
+                </a>
+            {% empty %}
+                <p class="text-center" style="margin-top: 20px;">抱歉，没有找到关于<span style="color: red;">{{ request.session.keyword }}</span>的内容</p>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+<!-- smooth-scrolling-of-move-up -->
+<script type="text/javascript" src="/static/js/move-top.js"></script>
+<script type="text/javascript" src="/static/js/easing.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $().UItoTop({ easingType: 'easeOutQuart' });
+    });
+</script>
+<!-- //smooth-scrolling-of-move-up -->
+</body>
+</html>

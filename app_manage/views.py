@@ -35,11 +35,6 @@ def set_menus(name):
             'url_name': 'manage_wechat',
             'name': '微信公众号'
         },
-        # 'manage_carousel': {
-        #     'active': False,
-        #     'url_name': 'manage_carousel',
-        #     'name': '首页轮播图'
-        # },
         'manage_category': {
             'active': False,
             'url_name': 'manage_category',
@@ -88,6 +83,8 @@ def manage_company(request):
         # put_data = json.loads(list(request.POST.keys())[0])   # 用表单提交的数据直接就是字典形式，不需要转换
         put_data = request.POST
         print('接收到post修改的公司信息：', put_data)
+
+        print('查看请求头', request.headers)
 
         # 先更新两张图片的数据
         company_image_form = CompanyImageForm(request.POST, request.FILES, instance=context['company'])

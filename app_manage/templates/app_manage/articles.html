@@ -70,7 +70,7 @@
                     <ul>
                         {% for article in articles %}
                             <a href="{% url 'manage_article' article.id %}">
-                                {% include 'article_list_item.html' %}
+                                {% include 'app1/article_list_item.html' %}
                             </a>
                         {% endfor %}
                     </ul>
