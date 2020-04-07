@@ -69,6 +69,37 @@
                 <input class="form-control" type="text" id="phone" name="phone" value="{{ company.phone }}"/>
             </div>
         </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="qq">客服QQ</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="qq" name="qq" value="{{ company.qq }}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="wechat">客服微信</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="wechat" name="wechat" value="{{ company.wechat }}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="address">公司地址</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="address" name="address" value="{{ company.address }}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="domain_name">官网域名</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="domain_name" name="domain_name" value="{{ company.domain_name }}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="icp">ICP备案号</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="icp" name="icp" value="{{ company.icp }}"/>
+            </div>
+        </div>
         <button class="btn btn-primary" style="float:right;" type="submit">保存</button>
     </form>
 {% endblock %}

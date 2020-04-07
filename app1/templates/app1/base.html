@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="zh-hans">
+<head>
+    <title>{% block title_block %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link rel="icon" href="{% if company.logo %}{{ company.logo.url }}{% else %}/static/images/default/default_favicon.png{% endif %}">
+
+    <meta name="keywords" content="{% if company.name %}{{ company.name }}{% else %}公司首页{% endif %}" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+    <link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="/static/css/font-awesome.css" rel="stylesheet">
+
+    <script src="/static/js/jquery-1.11.1.min.js"> </script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $(".scroll").click(function(event){
+                event.preventDefault();
+                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+            });
+        });
+    </script>
+    <script src="/static/js/menu_jquery.js"></script> <!-- pop-up -->
+</head>
+<body>
+
+{% block body_block %}{% endblock %}
+
+<!-- smooth-scrolling-of-move-up -->
+<script type="text/javascript" src="/static/js/move-top.js"></script>
+<script type="text/javascript" src="/static/js/easing.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $().UItoTop({ easingType: 'easeOutQuart' });
+    });
+
+    function common_reload_ajax(url, submit_type, data){
+        $.ajax({
+            type:submit_type,
+            url:url,
+            data:data,
+            dataType:'JSON',
+            headers:{'X-CSRFToken':'{{ csrf_token }}'},
+            error:function(request){
+                console.log("出错?", request);
+                alert('操作失败，请重试一下哈');
+            },
+            success:function(data){
+                if(!data.message){
+                    window.location.reload();
+                }else{
+                    alert(data.message);
+                }
+            }
+        });
+    }
+</script>
+<!-- //smooth-scrolling-of-move-up -->
+<script>
+/*
+    $(document).ready(function(){
+        // 鼠标悬停菜单自动显示
+        $('ul li.dropdown').hover(function() {
+            $(this).find('.dropdown-menu').stop(true, true).slideDown();
+        }, function() {
+            $(this).find('.dropdown-menu').stop(true, true).slideUp();
+        });
+    });
+ */
+</script>
+</body>
+</html>

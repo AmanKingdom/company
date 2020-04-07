@@ -92,7 +92,7 @@ def manage_company(request):
             company_image_form.save()
 
         # 后更新其余数据
-        name_list = ['name', 'slogan', 'email', 'telephone', 'phone', 'dec']
+        name_list = ['name', 'slogan', 'email', 'telephone', 'phone', 'dec', 'qq', 'wechat', 'address', 'domain_name', 'icp']
         modifily_data(name_list, put_data, Company, context['company'].id)
 
         return HttpResponseRedirect('/manage')
@@ -301,7 +301,7 @@ def getMenu12s():
 
 
 @login_required(login_url='/')
-def write_article(request):     # 新建文章
+def write_article(request):  # 新建文章
     context = {
         'content_form': ContentForm(),
         'article_image_form': ArticleImageForm(),
@@ -329,7 +329,7 @@ def write_article(request):     # 新建文章
 
 
 @login_required(login_url='/')
-def manage_article(request, id):    # 修改文章
+def manage_article(request, id):  # 修改文章
     context = {
         'article': Article.objects.get(id=id),
         'content_form': ContentForm(),
@@ -352,7 +352,7 @@ def manage_article(request, id):    # 修改文章
         # 后更新其余数据
         name_list = ['title', 'content', 'category_id']
         modifily_data(name_list, put_data, Article, id)
-        return HttpResponseRedirect('/manage/manage_article/'+id)
+        return HttpResponseRedirect('/manage/manage_article/' + id)
     elif request.method == 'DELETE':
         try:
             print('将删除的文章的id为：', id)
@@ -417,7 +417,6 @@ def set_module2(request):
         set_module(name, post_data['category_id'])
 
         return HttpResponseRedirect('/manage/manage_category')
-
 
 
 class LoginView(View):

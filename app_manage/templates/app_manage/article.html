@@ -86,10 +86,9 @@
                     common_ajax(this_url, "delete", "");
                 }
             }
+            //如果文章有内容就填充在content_form中
+            document.getElementById("id_content").value='{{ article.content|safe }}';
         {% endif %}
-        //如果文章有内容就填充在content_form中
-        document.getElementById("id_content").value='{{ article.content|safe }}';
-
 
         function common_ajax(url, submit_type, data){
             $.ajax({

@@ -14,6 +14,11 @@ class Company(models.Model):
     email = models.EmailField('公司邮箱', null=True, blank=True)
     telephone = models.CharField('联系电话', max_length=20, null=True, blank=True)
     phone = models.CharField('手机', max_length=16, null=True, blank=True)
+    qq = models.CharField('客服QQ', max_length=20, null=True, blank=True)
+    wechat = models.CharField('客服微信', max_length=30, null=True, blank=True)
+    address = models.CharField('地址', max_length=300, null=True, blank=True)
+    domain_name = models.CharField('官网域名', max_length=100, null=True, blank=True)
+    icp = models.CharField('icp', max_length=100, null=True, blank=True)
 
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
     modified_time = models.DateTimeField('最新修改时间', auto_now=True)
@@ -24,9 +29,9 @@ class Company(models.Model):
 
 # 微信公众号
 class Wechat(models.Model):
-    name = models.CharField('微信公众号名称', max_length=20)
-    qrcode = models.ImageField('公众号二维码', upload_to='images')
-    logo = models.ImageField('公众号头像', upload_to='images')
+    name = models.CharField('微信公众号名称', max_length=20, null=True, blank=True)
+    qrcode = models.ImageField('公众号二维码', upload_to='images', null=True, blank=True)
+    logo = models.ImageField('公众号头像', upload_to='images', null=True, blank=True)
 
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
     modified_time = models.DateTimeField('最新修改时间', auto_now=True)

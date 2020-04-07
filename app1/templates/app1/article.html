@@ -1,124 +1,59 @@
-<!DOCTYPE HTML>
-<html lang="zh-hans">
-<head>
-    <title>{% if article %}{{ article.name }}{% elif category %}{{ category.name }}{% elif company %}{{ company.name }}{% else %}文章列表{% endif %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+{% extends 'app1/base.html' %}
 
-    <link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
-    <link href="/static/css/style.css" rel='stylesheet' type='text/css' />
-    <link href="/static/css/font-awesome.css" rel="stylesheet">
+{% block title_block %}
+    {% if article %}{{ article.title }}{% elif current_menu2 %}{{ current_menu2.name }}{% elif current_menu1 %}{{ current_menu1.name }}{% elif company %}{{ company.name }}{% else %}文章列表{% endif %}
+{% endblock %}
 
-    <script src="/static/js/jquery-1.11.1.min.js"> </script>
-    <script src="/static/js/bootstrap.js"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $(".scroll").click(function(event){
-                event.preventDefault();
-                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-            });
-        });
-    </script>
-    <script src="/static/js/menu_jquery.js"></script> <!-- pop-up -->
-</head>
-<body>
-<!-- header -->
-<div class="header">
-    <!-- container -->
-    <div class="container">
-        {% include 'app1/header_bottom.html' %}
+{% block body_block %}
+    <div class="header">
+        <!-- container -->
+        <div class="container">
+            {% include 'app1/header_bottom.html' %}
+        </div>
+        <!-- //container -->
     </div>
-    <!-- //container -->
-</div>
-<!-- //header -->
-
-<div class="row">
-    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-md-2 col-md-offset-2 col-lg-2">
-        <ul class="nav menu1">
-            {% for menu1 in menu1s %}
-                <li {% if current_menu1.id|urlencode:'' == menu1.id|urlencode:'' %}class="active1" aria-expanded="true"{% endif %}>
-                    {% if menu1.has_children %}
-                        <a href="#menu{{ menu1.id }}" class="nav-header collapsed" data-toggle="collapse">
-                            {{ menu1.name }}
-                            <i class="fa fa-angle-down" style="float: right;line-height: 1.5em;"></i>
-                        </a>
-                        <ul id="menu{{ menu1.id }}" class="nav nav-list collapse in menu2"  aria-expanded="true">
-                            {% for menu2 in menu1.has_children %}
-                                <li {% if current_menu2 %}{% if current_menu2.id|urlencode:'' == menu2.id|urlencode:'' %}class="active2"{% endif %}{% endif %}>
-                                    <a href="{% url 'category' menu2.id %}">{{menu2.name}}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <a href="{% url 'category' menu1.id %}" class="nav-header">{{ menu1.name }}</a>
-                    {% endif %}
-                </li>
-            {% empty %}
-                <li><a href="{% url 'homepage' %}">首页</a></li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-md-6 col-md-offset-0 col-lg-6 col-lg-offset-0">
-        {% if article %}
-            {% include 'app1/article_detail.html' %}
-        {% elif articles %}
-            {% for article in articles %}
-                <a href="{% url 'article' article.id %}">
-                    {% include 'app1/article_list_item.html' %}
-                </a>
-            {% endfor %}
-        {% else %}
-            <p class="text-center" style="margin-top: 30px;">暂无文章</p>
-        {% endif %}
-    </div>
-</div>
 
 
-<!-- footer -->
-<div class="footer">
-    <div class="container">
-        <div class="footer-agileinfo">
-            <div class="col-md-6 footer-right text-center">
-                <div class="f-address">
-                    {% if wechat %}
-                        <img src="{{wechat.qrcode.url}}"/>
-                    {% else %}
-                        <img src="/static/images/default/wechat_qrcode.png"/>
-                    {% endif %}
-                    <p class="white_text" style="margin-top: 8px;">微信扫一扫，关注我们的微信公众号</p>
-                </div>
-            </div>
-            <div class="col-md-6 footer-left">
-                <div class="f-address">
-                    <h4 class="white_text">{{ company.name }}</h4>
-                    <p class="text">{{company.slogan}}</p>
-                    {% if company.telephone %}<p class="number">联系固话：{{company.telephone}}</p>{% endif %}
-                    {% if company.phone %}<p class="number">联系手机：{{company.phone}}</p>{% endif %}
-                </div>
-                <div class="copyright">
-                    <p>Copyright &copy; 2020.{{company.name}}</p>
-                </div>
-            </div>
-            <div class="clearfix"> </div>
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-md-2 col-md-offset-2 col-lg-2">
+            <ul class="nav menu1">
+                {% for menu1 in menu1s %}
+                    <li {% if current_menu1.id|urlencode:'' == menu1.id|urlencode:'' %}class="active1" aria-expanded="true"{% endif %}>
+                        {% if menu1.has_children %}
+                            <a href="#menu{{ menu1.id }}" class="nav-header collapsed" data-toggle="collapse">
+                                {{ menu1.name }}
+                                <i class="fa fa-angle-down" style="float: right;line-height: 1.5em;"></i>
+                            </a>
+                            <ul id="menu{{ menu1.id }}" class="nav nav-list collapse in menu2"  aria-expanded="true">
+                                {% for menu2 in menu1.has_children %}
+                                    <li {% if current_menu2 %}{% if current_menu2.id|urlencode:'' == menu2.id|urlencode:'' %}class="active2"{% endif %}{% endif %}>
+                                        <a href="{% url 'category' menu2.id %}">{{menu2.name}}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <a href="{% url 'category' menu1.id %}" class="nav-header">{{ menu1.name }}</a>
+                        {% endif %}
+                    </li>
+                {% empty %}
+                    <li><a href="{% url 'homepage' %}">首页</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-md-6 col-md-offset-0 col-lg-6 col-lg-offset-0">
+            {% if article %}
+                {% include 'app1/article_detail.html' %}
+            {% elif articles %}
+                {% for article in articles %}
+                    <a href="{% url 'article' article.id %}">
+                        {% include 'app1/article_list_item.html' %}
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p class="text-center" style="margin-top: 30px;">暂无文章</p>
+            {% endif %}
         </div>
     </div>
-</div>
-<!-- //footer -->
 
-
-
-
-
-
-<!-- smooth-scrolling-of-move-up -->
-<script type="text/javascript" src="/static/js/move-top.js"></script>
-<script type="text/javascript" src="/static/js/easing.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $().UItoTop({ easingType: 'easeOutQuart' });
-    });
-</script>
-<!-- //smooth-scrolling-of-move-up -->
-</body>
-</html>
+    {% include 'app1/footer.html' %}
+{% endblock %}

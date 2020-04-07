@@ -64,6 +64,7 @@ def homepage(request):
         'module1_right_articles': None,
         'module2_left_articles': None,
         'module2_right_articles': None,
+        'year': datetime.today().year
     }
 
     def set_module_and_articles(context, module_name):
@@ -78,7 +79,7 @@ def homepage(request):
                     if temp_articles:
                         articles.extend(temp_articles)
             else:
-                articles = context[module_name].category.articles.all()
+                articles = [x for x in context[module_name].category.articles.all()]
             if articles:
                 articles.sort(key=lambda x: x.modified_time, reverse=True)
                 center = int(len(articles)/2)
@@ -108,7 +109,8 @@ def article(request, id):
         'menu1s': getMenu1s(),
         'current_menu1': None,
         'current_menu2': None,
-        'article': Article.objects.get(id=id)
+        'article': Article.objects.get(id=id),
+        'wechat': getWechat(),
     }
     add_view_number(request, context['article'])
     set_current_menus(context, context['article'].category)
@@ -124,7 +126,9 @@ def category(request, id):
         'current_menu1': None,
         'current_menu2': None,
         'articles': None,
-        'article': None
+        'article': None,
+        'year': datetime.today().year,
+        'wechat': getWechat(),
     }
     set_current_menus(context, Category.objects.get(id=id))
 
