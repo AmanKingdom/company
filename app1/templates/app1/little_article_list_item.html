@@ -1,0 +1,12 @@
+<div class="list_item">
+    <div class="row">
+        <div style="width: 35%;float: left;">
+            <img src="{{ article.cover_img.url }}" style="width: 100%;"/>
+        </div>
+
+        <div style="width: 62%;float: right">
+            <h5 style="margin-bottom: 10px;">{{ article.title|slice:":16" }}…</h5>
+            <p style="float: right;margin-top: 5px;font-size: 12px;">{{ article.modified_time }}</p>
+        </div>
+    </div>
+</div>

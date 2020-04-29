@@ -55,41 +55,18 @@ def homepage(request):
     context = {
         'company': getCompany(),
         'menu1s': getMenu1s(),
-        'abstract_texts': AbstractText.objects.all(),
-        'wechat': getWechat(),
         'carousels': Carousel.objects.all().order_by('number'),
-        'module1': Module.objects.filter(name='首页模块一'),
-        'module2': Module.objects.filter(name='首页模块二'),
-        'module1_left_articles': None,
-        'module1_right_articles': None,
-        'module2_left_articles': None,
-        'module2_right_articles': None,
-        'year': datetime.today().year
+        'menu_homepage': True,
+        'new_news5': None,
+        'case4': None,
     }
+    context['new_news5'] = Category.objects.get(menu_name='news').articles.order_by('-modified_time')
+    if len(context['new_news5']) > 5:
+        context['new_news5'] = context['new_news5'][0:5]
 
-    def set_module_and_articles(context, module_name):
-        if context[module_name]:
-            context[module_name] = context[module_name][0]
-
-            articles = []
-            module_categorys = context[module_name].category.has_children()
-            if module_categorys:
-                for category_item in module_categorys:
-                    temp_articles = category_item.articles.all()
-                    if temp_articles:
-                        articles.extend(temp_articles)
-            else:
-                articles = [x for x in context[module_name].category.articles.all()]
-            if articles:
-                articles.sort(key=lambda x: x.modified_time, reverse=True)
-                center = int(len(articles)/2)
-                if center == 0:
-                    center = 1
-                context[module_name + '_left_articles'] = articles[:center]
-                context[module_name + '_right_articles'] = articles[center:]
-
-    set_module_and_articles(context, 'module1')
-    set_module_and_articles(context, 'module2')
+    context['case4'] = Category.objects.get(menu_name='case').articles.order_by('-modified_time')
+    if len(context['case4']) > 4:
+        context['case4'] = context['case4'][0:4]
 
     return render(request, 'app1/index.html', context=context, status=status.HTTP_200_OK)
 
@@ -109,32 +86,51 @@ def article(request, id):
         'menu1s': getMenu1s(),
         'current_menu1': None,
         'current_menu2': None,
+        'current_menu2_brother': None,  # 有current_ment2才有这个，这是给侧边栏的
+        'articles': None,
         'article': Article.objects.get(id=id),
         'wechat': getWechat(),
     }
     add_view_number(request, context['article'])
     set_current_menus(context, context['article'].category)
 
+    if context['current_menu2']:    # 有子菜单情况
+        context['current_menu2_brother'] = Category.objects.filter(parent_id=context['article'].category.parent_id)
+        print(context['article'].category, '的胸弟菜单：', context['current_menu2_brother'])
+    else:   # 没有子菜单
+        context['articles'] = context['article'].category.articles.order_by('-modified_time')
+
     return render(request, 'app1/article.html', context=context, status=status.HTTP_200_OK)
 
 
-def category(request, id):
-    print('分类id：', id)
+def category(request, menu_name):
+    print('分类menu_name：', menu_name)
     context = {
         'company': getCompany(),
-        'menu1s': getMenu1s(),
+        'menu1s': getMenu1s(),  # 这里的menu1s是给顶部导航栏的
         'current_menu1': None,
         'current_menu2': None,
+        'current_menu2_brother': None,  # 有current_ment2才有这个，这是给侧边栏的
         'articles': None,
         'article': None,
-        'year': datetime.today().year,
         'wechat': getWechat(),
     }
-    set_current_menus(context, Category.objects.get(id=id))
+    cate = Category.objects.get(menu_name=menu_name)
+    set_current_menus(context, cate)
 
-    context['articles'] = Article.objects.filter(category_id=id).order_by('modified_time')
-    if len(context['articles']) == 1:
+    context['articles'] = Article.objects.filter(category_id=cate.id).order_by('-modified_time')
+
+    if context['current_menu2']:    # 有子菜单情况
+        context['current_menu2_brother'] = Category.objects.filter(parent_id=cate.parent_id)
+        print(cate, '的胸弟菜单：', context['current_menu2_brother'])
+
+    # 不管该菜单的文章是否多篇，都默认展示第一篇的具体内容
+    if len(context['articles']) >= 1:
         context['article'] = context['articles'][0]
+        if len(context['articles']) == 1:
+            context['articles'] = None  # 单篇文章，将无文章列表侧边栏
+
+    if context['article']:  # 不管分类如何，只要是单篇文章都增加阅读量
         add_view_number(request, context['article'])
 
     return render(request, 'app1/article.html', context=context, status=status.HTTP_200_OK)
@@ -143,13 +139,17 @@ def category(request, id):
 def search(request):
     try:
         keyword = request.POST['keyword']
-        if keyword is "":
+        request.session['keyword'] = keyword
+        if keyword == "":
             return HttpResponseRedirect('/')
+        elif keyword == "管理系统":
+            return HttpResponseRedirect('/manage/')
         else:
-            request.session['keyword'] = keyword
             context = {
                 'company': getCompany(),
                 'articles': [],
+                'menu1s': getMenu1s(),
+                'menu_homepage': True,
             }
 
             for art in Article.objects.all():

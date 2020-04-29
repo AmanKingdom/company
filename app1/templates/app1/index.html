@@ -5,313 +5,142 @@
 {% endblock %}
 
 {% block body_block %}
-    <!-- header-top -->
-    <div class="header-top">
-        <!-- container -->
-        <div class="container">
-            <div class="social w3-agileitsicons">
-                <ul>
-                    <li>
-                        <div id="loginContainer">
-                            <a {% if request.session.username %}href="{% url 'manage_company' %}" {% else %}id="loginButton"{% endif %}>
-                                {% if company.logo %}
-                                    <img class="company_logo" src="{{ company.logo.url }}"/>
-                                {% else %}
-                                    <i class="fa fa-home" aria-hidden="true"></i>
-                                {% endif %}
-                            </a>
-                            <div id="loginBox">
-                                <div id="loginForm">
-                                    <fieldset id="body">
-                                        <fieldset>
-                                            <label for="username">管理员账号</label>
-                                            <input type="text" name="username" id="username" required="">
-                                        </fieldset>
-                                        <fieldset>
-                                            <label for="password">密码</label>
-                                            <input type="password" name="password" id="password" required="">
-                                        </fieldset>
-                                        <div id="tip" style="color: red"></div>
-                                        <button onclick="login()" class="form-control">登录</button>
-                                    </fieldset>
-                                </div>
-                                <script>
-                                    function login(){
-                                        $.ajax({
-                                            type:"POST",
-                                            url:"{% url 'login' %}",
-                                            data:{'username':$('#username').val(), 'password':$('#password').val()},
-                                            {#dataType:'JSON',#}
-                                            headers:{'X-CSRFToken':'{{ csrf_token }}'},
-                                            error:function(request){
-                                                console.log("登录出错?", request);
-                                                $('#tip').html(request.responseJSON.message);
-                                            },
-                                            success:function(data){
-                                                if(!data.message){
-                                                    console.log('登录成功');
-                                                    window.location.href="{% url 'manage_company' %}"
-                                                }
-                                                else{
-                                                    $('#tip').html(data.message);
-                                                }
-                                            }
-                                        });
-                                    }
-                                </script>
-                            </div>
-                        </div>
-                    </li>
-                    {#                --#}
-                    {#                <li><a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i></a></li>#}
-                </ul>
-            </div>
-            <div class="w3layouts-details">
-                <ul>
-{#                    {% if company.email %}<li><span class="glyphicon glyphicon-envelope"></span>{{ company.email }}</li>{% endif %}#}
-{#                    {% if company.telephone %}<li><span class="glyphicon glyphicon-earphone"></span>{{ company.telephone }}</li>{% endif %}#}
-{#                    {% if company.phone %}<li><span class="glyphicon glyphicon-phone"></span>{{ company.phone }}</li>{% endif %}#}
-                    {% if company.qq %}<li>客服QQ：{{ company.qq }}</li>{% endif %}
-                    {% if company.wechat %}<li>客服微信：{{ company.wechat }}</li>{% endif %}
-                </ul>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
-        <!-- //container -->
-    </div>
-    <!-- //header-top -->
-    <!-- header -->
-    <div class="header">
-        <!-- container -->
-        <div class="container">
-            {% include 'app1/header_bottom.html' %}
-            <div class="top-nav">
-                <nav class="navbar navbar-default">
-                    <div class="container">
-                        <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu_list">本站菜单</button>
-                    </div>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="menu_list">
-                        <ul class="nav navbar-nav">
-                            <li class="home-icon">
-                                <a href="{% url 'homepage' %}">
-                                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                                </a>
-                            </li>
-
-                            {% for menu1 in menu1s %}
-                                {#                            <li class="dropdown">#}
-                                <li>
-                                    {% if menu1.has_children %}
-                                        <a href="#" class="dropdown-toggle hvr-bounce-to-bottom" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ menu1.name }} <span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            {% for menu2 in menu1.has_children %}
-                                                <li><a class="hvr-bounce-to-bottom" href="{% url 'category' menu2.id %}">{{menu2.name}}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    {% else %}
-                                        <a href="{% url 'category' menu1.id %}">{{ menu1.name }}</a>
-                                    {% endif %}
-                                </li>
-                            {% empty %}
-                                <li><a href="{% url 'homepage' %}">首页</a></li>
-                            {% endfor %}
-                        </ul>
-                        <div class="clearfix"> </div>
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <!-- //container -->
-    </div>
-    <!-- //header -->
-    <!-- banner -->
-
-    <div class="banner" style="background: url({% if company.big_img %}{{ company.big_img.url }}{% else %}/static/images/1.jpg{% endif %}) no-repeat center center;background-size:100%100%;">
-        <!-- container -->
-        <div class="container">
-            <div class="banner-agileinfo">
-                <script src="/static/js/responsiveslides.min.js"></script>
-                <script>
-                    // You can also use "$(window).load(function() {"
-                    $(function () {
-                        // Slideshow 4
-                        $("#slider3").responsiveSlides({
-                            auto: true,
-                            pager: true,
-                            nav: false,
-                            speed: 500,
-                            namespace: "callbacks",
-                            before: function () {
-                                $('.events').append("<li>before event fired.</li>");
-                            },
-                            after: function () {
-                                $('.events').append("<li>after event fired.</li>");
-                            }
-                        });
-                    });
-                </script>
-                <div  id="top" class="callbacks_container-wrap">
-                    <ul class="rslides" id="slider3">
-                        {% for abstract_text in abstract_texts %}
-                            <li>
-                                <div class="banner-w3text">
-                                    <h3>{{abstract_text.title}}</h3>
-                                    <h5>{{ abstract_text.title2 }}</h5>
-                                    <p>{{ abstract_text.content }}</p>
-                                </div>
-                            </li>
-                        {% empty %}
-                            <li>
-                                <div class="banner-w3text">
-                                    <h3>关于公司的更多方面或重大特色的简述</h3>
-                                    <h5>小标题副标题</h5>
-                                    <p>简述、摘要，可以由公司自由发挥创作。简述、摘要，可以由公司自由发挥创作。简述、摘要，可以由公司自由发挥创作。简述、摘要，可以由公司自由发挥创作。简述、摘要，可以由公司自由发挥创作简述、摘要，可以由公司自由发挥创作</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="banner-w3text">
-                                    <h3>关于公司的更多方面或重大特色的简述</h3>
-                                    <h5>小标题副标题</h5>
-                                    <p>您可以写更多不同的简述摘要，以便更有节奏地轮播展示~您可以写更多不同的简述摘要，以便更有节奏地轮播展示~您可以写更多不同的简述摘要，以便更有节奏地轮播展示~您可以写更多不同的简述摘要，以便更有节奏地轮播展示~</p>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
+    <div class="row">
+        <div class="col-xs-7">
+            <div class="panel panel-default" style="height: 270px;">
+                <div class="panel-heading">最新动态</div>
+                <div class="list-group">
+                    {% for news in new_news5 %}
+                        <button class="list-group-item" style="width: 100%; text-align: left;margin-bottom: 4px;border:0 solid #fff;border-bottom: 1px solid #efefef;"><a href="{% url 'article' news.id %}">{{news.title|slice:":20"}}…<span style="float: right;">[{{news.modified_time}}]</span></a></button>
+                    {% empty %}
+                        <button class="list-group-item" style="width: 100%; text-align: left">还没有动态<span style="float: right;">[20xx-xx-xx]</span></button>
+                    {% endfor%}
                 </div>
             </div>
         </div>
-        <!-- //container -->
-    </div>
-    <!-- //banner -->
-
-
-
-    {% if module1 %}
-        <div class="welcome">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
-                    <h2 class="module1_title">{{ module1.category.name }}</h2>
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                        {% for article in module1_left_articles %}
-                            <a href="{% url 'article' article.id %}" style="text-align: left;">
-                                <div class="col-xs-7"><p>{{article.title}}</p></div>
-                                <div class="col-xs-5" style="color: black;"><p>{{article.modified_time.date}}</p></div>
-                            </a>
-                        {% endfor %}
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                        {% for article in module1_right_articles %}
-                            <a href="{% url 'article' article.id %}" style="text-align: left;">
-                                <div class="col-xs-7"><p>{{article.title}}</p></div>
-                                <div class="col-xs-5" style="color: black;"><p>{{article.modified_time.date}}</p></div>
-                            </a>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
-
-
-    <!-- slider -->
-    <div class="slider">
-        <div class="arrival-grids wthree-grids">
-            <ul id="flexiselDemo1">
-                {% for carousel in carousels %}
-                    <li>
-                        <a href="{% url 'article' carousel.article.id %}">
-                            <img src="{{carousel.img.url}}" alt="{{carousel.article.title}}"/>
-                        </a>
-                        <p class="bottom_hr">{{carousel.article.title}}</p>
-                    </li>
-                {% empty %}
-                    {% for x in '1234567' %}
-                        <li><a><img src="/static/images/s/s{{ x }}.jpg" alt=""/></a></li>
+        <div class="col-xs-5">
+            <div id="myCarousel" class="carousel slide"  data-ride="carousel" data-interval="2000">
+                <!-- 默认轮播（Carousel）指标 -->
+                <ol class="carousel-indicators">
+                    {% for carousel in carousels %}
+                        <li data-target="#myCarousel" data-slide-to="{{ carousel.number }}" {% if forloop.first %}class="active"{% endif %}></li>
+                    {% empty %}
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarouse1" data-slide-to="1"></li>
                     {% endfor %}
-                {% endfor %}
-            </ul>
-            <script type="text/javascript">
-                $(window).load(function() {
-                    $("#flexiselDemo1").flexisel({
-                        visibleItems: 4,
-                        animationSpeed: 1000,
-                        autoPlay: true,
-                        autoPlaySpeed: 2000,
-                        pauseOnHover:true,
-                        enableResponsiveBreakpoints: true,
-                        responsiveBreakpoints: {
-                            portrait: {
-                                changePoint:480,
-                                visibleItems: 1
-                            },
-                            landscape: {
-                                changePoint:640,
-                                visibleItems: 2
-                            },
-                            tablet: {
-                                changePoint:768,
-                                visibleItems: 3
-                            }
-                        }
-                    });
-                });
-            </script>
-            <script type="text/javascript" src="/static/js/jquery.flexisel.js"></script>
+                </ol>
+
+                <!-- 轮播（Carousel）项目 -->
+                <div class="carousel-inner">
+                    {% for carousel in carousels %}
+                        <div {% if forloop.first %} class="item active"{% else %} class="item"{% endif %}>
+                            <a href="{% url 'article' carousel.article.id %}">
+                                <img src="{{carousel.img.url}}" style="width:100%;"/>
+                                <div class="carousel-caption">{{carousel.title}}</div>
+                            </a>
+                        </div>
+                    {% empty %}
+                        <div class="item active">
+                            <img src="/static/images/s/s1.jpg" style="width:100%;"/>
+                            <div class="carousel-caption">轮播图标题说明</div>
+                        </div>
+                        <div class="item">
+                            <img src="/static/images/s/s2.jpg" style="width:100%;"/>
+                            <div class="carousel-caption">轮播图标题说明</div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- 轮播（Carousel）导航 -->
+                <a class="carousel-control left" href="#myCarousel"
+                   data-slide="prev"> <span _ngcontent-c3="" aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span></a>
+                <a class="carousel-control right" href="#myCarousel"
+                   data-slide="next"> <span _ngcontent-c3="" aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
         </div>
     </div>
-    <!-- //slider -->
-
-
-    {% if module2 %}
-        <div class="welcome">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
-                    <h2 class="module1_title">{{ module2.category.name }}</h2>
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                        {% for article in module2_left_articles %}
-                            <div class="bottom_hr module_img_div">
-                                <a href="{% url 'article' article.id %}">
-                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                        <img src="{{ article.cover_img.url }}" style="width: 100%;"/>
-                                    </div>
-                                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="text-align: left">
-                                        <p>{{article.title}}</p>
-                                        <p>{{ article.modified_time }}</p>
-                                    </div>
-                                </a>
-                            </div><br>
-                        {% endfor %}
+    <!--业务导航-->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row yewu">
+                <div class="col-xs-1" style="height: 100%">
+                    <img src="/static/images/yewu/yewu.png" style="height: 100%;">
+                </div>
+                <div class="col-xs-11" style="height: 100%">
+                    <div class="col-xs-3" style="height: 100%;">
+                        <div class="img_text" style="background: url('/static/images/yewu/yewu11.png');">
+                            <a href="{% url 'category' 'water_ecological_restoration' %}">水生态修复</a>
+                        </div>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                        {% for article in module2_right_articles %}
-                            <div class="bottom_hr module_img_div">
-                                <a href="{% url 'article' article.id %}">
-                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                        <img src="{{ article.cover_img.url }}" style="width: 100%;"/>
-                                    </div>
-                                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="text-align: left">
-                                        <p>{{article.title}}</p>
-                                        <p>{{ article.modified_time }}</p>
-                                    </div>
-                                </a>
-                            </div><br>
-                        {% endfor %}
+                    <div class="col-xs-3" style="height: 100%;">
+                        <div class="img_text" style="background: url('/static/images/yewu/yewu21.png');">
+                            <a href="{% url 'category' 'black_water_treatment' %}">臭黑水治理</a>
+                        </div>
                     </div>
+                    <div class="col-xs-3" style="height: 100%;">
+                        <div class="img_text" style="background: url('/static/images/yewu/yewu31.png');">
+                            <a href="{% url 'category' 'habitat_restoration' %}">栖息地修复</a>
+                        </div>
+                    </div>
+                    <div class="col-xs-3" style="height: 100%;">
+                        <div class="img_text" style="background: url('/static/images/yewu/yewu41.png');">
+                            <a href="{% url 'category' 'water_ecological_maintenance' %}">河湖生态运营维护</a>
+                        </div>
+                    </div>
+                    {#                    <div class="col-xs-3"><a href="{% url 'category' 'water_ecological_restoration' %}" class="thumbnail"><img src="/static/images/yewu/yewu1.png" onmouseover="this.src='/static/images/yewu/yewu11.png'" onmouseout="this.src='/static/images/yewu/yewu1.png'"></a></div>#}
+                    {#                    <div class="col-xs-3"><a href="{% url 'category' 'black_water_treatment' %}" class="thumbnail"><img src="/static/images/yewu/yewu2.png" onmouseover="this.src='/static/images/yewu/yewu21.png'" onmouseout="this.src='/static/images/yewu/yewu2.png'"></a></div>#}
+                    {#                    <div class="col-xs-3"><a href="{% url 'category' 'habitat_restoration' %}" class="thumbnail"><img src="/static/images/yewu/yewu3.png" onmouseover="this.src='/static/images/yewu/yewu31.png'" onmouseout="this.src='/static/images/yewu/yewu3.png'"></a></div>#}
+                    {#                    <div class="col-xs-3"><a href="{% url 'category' 'water_ecological_maintenance' %}" class="thumbnail"><img src="/static/images/yewu/yewu4.png" onmouseover="this.src='/static/images/yewu/yewu41.png'" onmouseout="this.src='/static/images/yewu/yewu4.png'"></a></div>#}
                 </div>
             </div>
         </div>
-    {% endif %}
-
-
-    <div class="news-bottom" style="background: url({% if company.big_img %}{{ company.big_img.url }}{% else %}/static/images/1.jpg{% endif %}) no-repeat center fixed;background-size:100%100%;">
-        <div class="container">
-            <div class="news-w3agileitsinfo">
-                <h3>公司简介</h3>
-                <p>{{ company.dec|safe }}</p>
+    </div>
+    <hr>
+    <!--经典案例-->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row yewu">
+                <div class="col-xs-1" style="height: 100%">
+                    <img src="/static/images/anli.png" style="height: 100%;">
+                </div>
+                <div class="col-xs-11" style="height: 100%">
+                    {% for case in case4 %}
+                        <div class="col-xs-3" style="height: 100%;">
+                            <div class="img_text" style="background: url('{{case.cover_img.url}}');"><a href="#">{{case.title}}</a></div>
+                        </div>
+                    {% empty %}
+                        <div class="col-xs-3" style="height: 100%;">
+                            <div class="img_text" style="background: url('/static/images/s/s1.jpg');"><a href="#">案例一标题</a></div>
+                        </div>
+                        <div class="col-xs-3" style="height: 100%;">
+                            <div class="img_text" style="background: url('/static/images/s/s2.jpg');"><a href="#">案例二标题</a></div>
+                        </div>
+                        <div class="col-xs-3" style="height: 100%;">
+                            <div class="img_text" style="background: url('/static/images/s/s3.jpg');"><a href="#">案例三标题</a></div>
+                        </div>
+                        <div class="col-xs-3" style="height: 100%;">
+                            <div class="img_text" style="background: url('/static/images/s/s4.jpg');"><a href="#">案例四标题</a></div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
-    <!-- //news-bottom -->
-    {% include 'app1/footer.html' %}
+    <hr>
+    {#    <div class="text-center" style="background-color: #337ab7;line-height: 36px;color: white;font-weight: bold;font-size: 26px;">{{ company.slogan }}</div>#}
+    <div class="text-center">
+        <p>{{company.slogan}}</p>
+        <p>公司地址：{{company.address}}</p>
+        <p>
+            {{company.name}} &copy; 2020
+            <a href="http://idinfo.zjamr.zj.gov.cn/bscx.do?method=lzxx&amp;id=3301963301080000025024" target="_blank">
+                <img src="//gw.alicdn.com/tfs/TB1GxwdSXXXXXa.aXXXXXXXXXXX-65-70.gif" style="height: 20px;">
+            </a>
+            <a href="http://www.beian.gov.cn/portal/registerSystemInfo" target="_blank">
+                <img src="//img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" style="height: 20px;">
+                <span>{{company.icp}}</span>
+            </a>
+        </p>
+    </div>
+    <br>
 {% endblock %}

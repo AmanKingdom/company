@@ -1,14 +1,11 @@
-<!DOCTYPE HTML>
-<html lang="zh-hans">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>{% block title_block %}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link rel="icon" href="{% if company.logo %}{{ company.logo.url }}{% else %}/static/images/default/default_favicon.png{% endif %}">
-
     <meta name="keywords" content="{% if company.name %}{{ company.name }}{% else %}公司首页{% endif %}" />
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
     <link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
     <link href="/static/css/style.css" rel='stylesheet' type='text/css' />
@@ -16,61 +13,59 @@
 
     <script src="/static/js/jquery-1.11.1.min.js"> </script>
     <script src="/static/js/bootstrap.js"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $(".scroll").click(function(event){
-                event.preventDefault();
-                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-            });
-        });
-    </script>
-    <script src="/static/js/menu_jquery.js"></script> <!-- pop-up -->
 </head>
 <body>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+        <div class="row">
+            <div class="col-xs-8">
+                <img src="/static/images/title.png" style="width:70%;margin-top: 6px;">
+            </div>
+            <div class="col-xs-4">
+                <form action="{% url 'search' %}" method="post">
+                    {% csrf_token %}
 
-{% block body_block %}{% endblock %}
-
-<!-- smooth-scrolling-of-move-up -->
-<script type="text/javascript" src="/static/js/move-top.js"></script>
-<script type="text/javascript" src="/static/js/easing.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $().UItoTop({ easingType: 'easeOutQuart' });
-    });
-
-    function common_reload_ajax(url, submit_type, data){
-        $.ajax({
-            type:submit_type,
-            url:url,
-            data:data,
-            dataType:'JSON',
-            headers:{'X-CSRFToken':'{{ csrf_token }}'},
-            error:function(request){
-                console.log("出错?", request);
-                alert('操作失败，请重试一下哈');
-            },
-            success:function(data){
-                if(!data.message){
-                    window.location.reload();
-                }else{
-                    alert(data.message);
-                }
-            }
-        });
-    }
-</script>
-<!-- //smooth-scrolling-of-move-up -->
-<script>
-/*
-    $(document).ready(function(){
-        // 鼠标悬停菜单自动显示
-        $('ul li.dropdown').hover(function() {
-            $(this).find('.dropdown-menu').stop(true, true).slideDown();
-        }, function() {
-            $(this).find('.dropdown-menu').stop(true, true).slideUp();
-        });
-    });
- */
-</script>
+                    <div class="form-group">
+                        <div class="col-xs-9">
+                            <input class="form-control" type="text" name="keyword" placeholder="站内搜索" required="" autofocus value="{{ request.session.keyword }}"/>
+                        </div>
+                        <div class="col-xs-3">
+                            <button type="submit" class="btn btn-default">搜索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr style="margin-top: 0;">
+        <div class="row">
+            <div class="container">
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu_list" style="width: 100%;background-color: rgb(51,122,183)">本站菜单</button>
+            </div>
+            <div class="collapse navbar-collapse" id="menu_list">
+                <ul class="nav nav-pills nav-justified">
+                    <li role="presentation" {% if menu_homepage %}class="active"{% endif %}><a href="{% url 'homepage' %}">首页</a></li>
+                    {% for menu1 in menu1s %}
+                        <li role="presentation" {% if menu1.id|urlencode:'' == current_menu1.id|urlencode:'' %}class="active" {% endif %}>
+                            {% if menu1.has_children %}
+                                <a href="#" class="dropdown-toggle hvr-bounce-to-bottom" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ menu1.name }} <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    {% for menu2 in menu1.has_children %}
+                                        <li role="presentation"><a class="hvr-bounce-to-bottom" href="{% url 'category' menu2.menu_name %}">{{menu2.name}}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <a href="{% url 'category' menu1.menu_name %}">{{ menu1.name }}</a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <hr>
+        {% block body_block %}{% endblock %}
+    <br>
+    <br>
+    </div>
+</div>
 </body>
 </html>

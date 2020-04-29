@@ -5,55 +5,49 @@
 {% endblock %}
 
 {% block body_block %}
-    <div class="header">
-        <!-- container -->
-        <div class="container">
-            {% include 'app1/header_bottom.html' %}
-        </div>
-        <!-- //container -->
-    </div>
-
-
     <div class="row">
-        <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-md-2 col-md-offset-2 col-lg-2">
-            <ul class="nav menu1">
-                {% for menu1 in menu1s %}
-                    <li {% if current_menu1.id|urlencode:'' == menu1.id|urlencode:'' %}class="active1" aria-expanded="true"{% endif %}>
-                        {% if menu1.has_children %}
-                            <a href="#menu{{ menu1.id }}" class="nav-header collapsed" data-toggle="collapse">
-                                {{ menu1.name }}
-                                <i class="fa fa-angle-down" style="float: right;line-height: 1.5em;"></i>
-                            </a>
-                            <ul id="menu{{ menu1.id }}" class="nav nav-list collapse in menu2"  aria-expanded="true">
-                                {% for menu2 in menu1.has_children %}
-                                    <li {% if current_menu2 %}{% if current_menu2.id|urlencode:'' == menu2.id|urlencode:'' %}class="active2"{% endif %}{% endif %}>
-                                        <a href="{% url 'category' menu2.id %}">{{menu2.name}}</a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <a href="{% url 'category' menu1.id %}" class="nav-header">{{ menu1.name }}</a>
-                        {% endif %}
-                    </li>
-                {% empty %}
-                    <li><a href="{% url 'homepage' %}">首页</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-md-6 col-md-offset-0 col-lg-6 col-lg-offset-0">
-            {% if article %}
-                {% include 'app1/article_detail.html' %}
-            {% elif articles %}
-                {% for article in articles %}
-                    <a href="{% url 'article' article.id %}">
-                        {% include 'app1/article_list_item.html' %}
-                    </a>
-                {% endfor %}
+        {% if current_menu2_brother %}  <!--有子菜单-->
+            <div class="col-sm-3">
+                <ul class="nav nav-pills nav-stacked" style="border-left: 1px solid #efefef;border-right: 1px solid #efefef;">
+                    {% for menu in current_menu2_brother %}
+                        <li {% if current_menu2 %}{% if current_menu2.id|urlencode:'' == menu.id|urlencode:'' %}class="active"{% endif %}{% endif %}>
+                            <a style="padding-left: 50px;" href="{% url 'category' menu.menu_name %}">{{menu.name}}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-sm-9">
+                {% if articles %}  <!--多篇文章-->
+                    {% for article in articles %}
+                        <a href="{% url 'article' article.id %}">
+                            {% include 'app1/article_list_item.html' %}
+                        </a>
+                    {% endfor %}
+                {% elif article %}   <!--单篇文章-->
+                    {% include 'app1/article_detail.html' %}
+                {% else %}   <!--没有文章-->
+                    <p class="text-center" style="margin-top: 30px;">暂无文章</p>
+                {% endif %}
+            </div>
+        {% else %}  <!--无子菜单-->
+            {% if articles %}   <!--多篇文章-->
+                <div class="col-sm-3">
+                    {% for article in articles %}
+                        <a href="{% url 'article' article.id %}">
+                            {% include 'app1/little_article_list_item.html' %}
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-9">
+                    {% include 'app1/article_detail.html' %}
+                </div>
             {% else %}
-                <p class="text-center" style="margin-top: 30px;">暂无文章</p>
+                {% if article %}   <!--单篇文章-->
+                    {% include 'app1/article_detail.html' %}
+                {% else %}   <!--没有文章-->
+                    <p class="text-center" style="margin-top: 30px;">暂无文章</p>
+                {% endif %}
             {% endif %}
-        </div>
+        {% endif %}
     </div>
-
-    {% include 'app1/footer.html' %}
 {% endblock %}

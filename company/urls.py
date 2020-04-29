@@ -25,7 +25,7 @@ urlpatterns = [
     path('', homepage, name='homepage'),
     path('admin/', admin.site.urls),
     path('article/<id>/', article, name='article'),
-    path('category/<id>/', category, name='category'),
+    path('category/<menu_name>/', category, name='category'),
     path('search/', search, name='search'),
 
     path('ueditor/', include('DjangoUeditor.urls')),

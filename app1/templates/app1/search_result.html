@@ -1,25 +1,13 @@
 {% extends 'app1/base.html' %}
 
 {% block body_block %}
-    <div class="header">
-        <!-- container -->
-        <div class="container">
-            {% include 'app1/header_bottom.html' %}
-        </div>
-        <!-- //container -->
-    </div>
-
-    <div class="row" style="margin-bottom: 100px;">
-        <div class="col-sm-6 col-sm-offset-3">
-            <ul>
-                {% for article in articles %}
-                    <a href="{% url 'article' article.id %}">
-                        {% include 'app1/article_list_item.html' %}
-                    </a>
-                {% empty %}
-                    <p class="text-center" style="margin-top: 20px;">抱歉，没有找到关于<span style="color: red;">{{ request.session.keyword }}</span>的内容</p>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+    <ul>
+        {% for article in articles %}
+            <a href="{% url 'article' article.id %}">
+                {% include 'app1/article_list_item.html' %}
+            </a>
+        {% empty %}
+            <p class="text-center" style="margin-top: 20px;">抱歉，没有找到关于<span style="color: red;">{{ request.session.keyword }}</span>的内容</p>
+        {% endfor %}
+    </ul>
 {% endblock %}

@@ -37,13 +37,23 @@
                 <label class="col-sm-2 control-label">文章分类<span style="color: red;">*</span></label>
                 <div class="col-sm-10">
                     <select class="form-control" name="category_id">
-                        {% for menu12 in menu12s %}
-                            {% if forloop.first %}
-                                <option value={{ menu12.id }} selected>{{ menu12.name }}</option>
-                            {% else %}
-                                <option value={{ menu12.id }}>{{ menu12.name }}</option>
-                            {% endif %}
-                        {% endfor %}
+                        {% if article %}
+                            {% for menu12 in menu12s %}
+                                {% if article.category.id|urlencode:'' == menu12.id|urlencode:'' %}
+                                    <option value={{ menu12.id }} selected>{{ menu12.name }}</option>
+                                {% else %}
+                                    <option value={{ menu12.id }}>{{ menu12.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {% for menu12 in menu12s %}
+                                {% if forloop.first %}
+                                    <option value={{ menu12.id }} selected>{{ menu12.name }}</option>
+                                {% else %}
+                                    <option value={{ menu12.id }}>{{ menu12.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     </select>
                 </div>
             </div>

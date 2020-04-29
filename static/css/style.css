@@ -215,9 +215,9 @@ div#menu_list {
     margin-left: 3px;
 }
 ul.dropdown-menu {
-    background: #2b2b2b;
+    /*background: #2b2b2b;*/
     box-shadow: 0 0 0;
-    border: none;
+    border: 1px solid #888888;
     margin: 0;
     top: 4.8em;
     left: 0;
@@ -235,7 +235,7 @@ ul.dropdown-menu {
     margin: 1em !important;
     font-weight: normal;
     line-height: 1.42857143;
-    color: #FFF !important;
+    /*color: #FFF !important;*/
 }
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
     background: none;
@@ -1239,7 +1239,7 @@ li.list-group-item1 {
     margin-bottom: 48px;
 }
 ol {
-    margin-bottom: 44px;
+    margin-bottom: 0px;
 }
 h2.typoh2{
     margin: 0 0 10px;
@@ -1283,7 +1283,7 @@ li.list-group-item1 {
     margin-bottom: 48px;
 }
 ol {
-    margin-bottom: 44px;
+    margin-bottom: 0px;
 }
 h2.typoh2{
     margin: 0 0 10px;
@@ -1473,7 +1473,7 @@ li.list-group-item1 {
     margin-bottom: 48px;
 }
 ol {
-    margin-bottom: 44px;
+    margin-bottom: 0px;
 }
 h2.typoh2{
     margin: 0 0 10px;
@@ -2950,9 +2950,6 @@ button.btn1.btn-1.btn-1b:hover {
 
 
 
-.article_detail{
-    margin: 40px 0px 160px;
-}
 
 .list_item{
     margin: 20px 0px;

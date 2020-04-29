@@ -1,6 +1,6 @@
 {% extends 'app_manage/manage.html' %}
 
-{% block manage_css %}{{ dec_form.media }}{% endblock %}
+{% block manage_css %}{% endblock %}
 
 
 
@@ -30,25 +30,6 @@
                 <div class="col-sm-10">
                     {{ company_image_form.logo }}
                 </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="id_big_img">官网首页大背景图</label>
-            <div class="col-sm-10">
-                {% if company.big_img %}
-                    <div class="col-sm-2 control-label">
-                        <img src="{{ company.big_img.url }}" style="height: 60px; width: 100px;" alt="未选择图片"/>
-                    </div>
-                {% endif %}
-                <div class="col-sm-10">
-                    {{ company_image_form.big_img }}
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">公司简介</label>
-            <div class="col-sm-10">
-                {{ dec_form }}
             </div>
         </div>
         <div class="form-group">
@@ -89,12 +70,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="domain_name">官网域名</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="text" id="domain_name" name="domain_name" value="{{ company.domain_name }}"/>
-            </div>
-        </div>
-        <div class="form-group">
             <label class="col-sm-2 control-label" for="icp">ICP备案号</label>
             <div class="col-sm-10">
                 <input class="form-control" type="text" id="icp" name="icp" value="{{ company.icp }}"/>
@@ -106,10 +81,5 @@
 
 
 
-{% block manage_js %}
-    <script>
-        //如果公司有简介就填充在dec_form中
-        document.getElementById("id_dec").value='{{ company.dec|safe }}'
-    </script>
-{% endblock %}
+{% block manage_js %}{% endblock %}
 

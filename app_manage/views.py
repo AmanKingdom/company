@@ -7,10 +7,56 @@ from django.shortcuts import render
 from django.views import View
 from rest_framework import status
 
-from app1.models import Company, AbstractText, Wechat, Category, Article, Carousel, Module
+from app1.models import Company, Wechat, Category, Article, Carousel
 from app1.views import getCompany, getWechat, getMenu1s, set_current_menus
-from app_manage.forms import LoginForm, DecForm, CompanyImageForm, WechatImageForm, ContentForm, ArticleImageForm
+from app_manage.forms import LoginForm, CompanyImageForm, WechatImageForm, ContentForm, ArticleImageForm
 from app_manage.models import User
+
+
+CATEGORYS = [
+    {'name': '新闻动态', 'menu_name': 'news', 'parent': None},
+    {'name': '公司简介', 'menu_name': 'introduction', 'parent': None},
+
+    {'name': '业务介绍', 'menu_name': 'business', 'parent': None},
+    {'name': '水生态修复', 'menu_name': 'water_ecological_restoration', 'parent': 'business'},
+    {'name': '臭黑水治理', 'menu_name': 'black_water_treatment', 'parent': 'business'},
+    {'name': '栖息地修复', 'menu_name': 'habitat_restoration', 'parent': 'business'},
+    {'name': '河湖生态运营维护', 'menu_name': 'water_ecological_maintenance', 'parent': 'business'},
+    {'name': '自然教育', 'menu_name': 'natural_ducation', 'parent': 'business'},
+
+    {'name': '水生植物', 'menu_name': 'aquatic_plant', 'parent': None},
+    {'name': '沉水植物', 'menu_name': 'submerged_plant', 'parent': 'aquatic_plant'},
+    {'name': '浮叶植物', 'menu_name': 'floating_leaf_plant', 'parent': 'aquatic_plant'},
+    {'name': '挺水植物', 'menu_name': 'emergent_plant', 'parent': 'aquatic_plant'},
+    {'name': '湿生植物', 'menu_name': 'hygrophyte', 'parent': 'aquatic_plant'},
+
+    {'name': '生产基地', 'menu_name': 'production_base', 'parent': None},
+    {'name': '广东东莞基地', 'menu_name': 'dongguan', 'parent': 'production_base'},
+    {'name': '广西南宁基地', 'menu_name': 'nanning', 'parent': 'production_base'},
+
+    {'name': '工程案例', 'menu_name': 'case', 'parent': None},
+    {'name': '联系我们', 'menu_name': 'contact_us', 'parent': None},
+]
+
+
+def init_menu(request):
+    """
+    初始化文章分类（即首页菜单)
+    :param request:
+    :return:就返回个json格式数据OK了，仅限我使用，别人不需要使用
+    """
+    categorys = Category.objects.all()
+    if categorys:
+        print('已经有文章分类')
+    else:
+        print('还没有文章分类了，创建')
+        for cate in CATEGORYS:
+            if cate['parent']:
+                parent = Category.objects.get(menu_name=cate['parent'])
+                cate['parent_id'] = parent.id
+            del cate['parent']
+            Category.objects.create(**cate)
+    return JsonResponse({'status': True})
 
 
 def set_menus(name):
@@ -25,21 +71,11 @@ def set_menus(name):
             'url_name': 'manage_company',
             'name': '公司信息'
         },
-        'manage_abstract_text': {
-            'active': False,
-            'url_name': 'manage_abstract_text',
-            'name': '首页摘要'
-        },
-        'manage_wechat': {
-            'active': False,
-            'url_name': 'manage_wechat',
-            'name': '微信公众号'
-        },
-        'manage_category': {
-            'active': False,
-            'url_name': 'manage_category',
-            'name': '菜单分类'
-        },
+        # 'manage_wechat': {
+        #     'active': False,
+        #     'url_name': 'manage_wechat',
+        #     'name': '微信公众号'
+        # },
         'manage_articles': {
             'active': False,
             'url_name': 'manage_articles',
@@ -68,11 +104,10 @@ def modifily_data(name_list, data, model, id):
         model.objects.filter(id=id).update(**need_change_data)
 
 
-@login_required(login_url='/')
+@login_required(login_url='/manage/login')
 def manage_company(request):
     context = {
         'company': getCompany(),
-        'dec_form': DecForm(),
         'company_image_form': CompanyImageForm(instance=getCompany()),
         'menus': set_menus('manage_company')
     }
@@ -86,57 +121,16 @@ def manage_company(request):
 
         print('查看请求头', request.headers)
 
-        # 先更新两张图片的数据
+        # 先检查更新logo图片的数据
         company_image_form = CompanyImageForm(request.POST, request.FILES, instance=context['company'])
         if company_image_form.is_valid():
             company_image_form.save()
 
         # 后更新其余数据
-        name_list = ['name', 'slogan', 'email', 'telephone', 'phone', 'dec', 'qq', 'wechat', 'address', 'domain_name', 'icp']
+        name_list = ['name', 'slogan', 'email', 'telephone', 'phone', 'qq', 'wechat', 'address', 'icp']
         modifily_data(name_list, put_data, Company, context['company'].id)
 
         return HttpResponseRedirect('/manage')
-    else:
-        print('???not get and not post? what are you doing?')
-        return HttpResponseRedirect('/')
-
-
-@login_required(login_url='/')
-def manage_abstract_text(request):
-    context = {
-        'menus': set_menus('manage_abstract_text'),
-        'abstract_texts': AbstractText.objects.all()
-    }
-
-    if request.method == 'GET':
-        return render(request, 'app_manage/abstract_text.html', context=context)
-    elif request.method == 'POST':
-        try:
-            print('接收到post新增摘要数据：', request.POST)
-            AbstractText.objects.create(**json.loads(list(request.POST.keys())[0]))
-
-            return JsonResponse({'message': None})
-        except Exception:
-            return JsonResponse({'message': '添加数据失败！请重试'})
-    elif request.method == 'PUT':
-        try:
-            name_list = ['title', 'title2', 'content']
-            put_data = json.loads(list(QueryDict(request.body).keys())[0])
-            print('接收到put修改摘要数据：', put_data)
-
-            modifily_data(name_list, put_data, AbstractText, put_data['id'])
-
-            return JsonResponse({'message': None})
-        except Exception:
-            return JsonResponse({'message': '修改数据失败！请重试'})
-    elif request.method == 'DELETE':
-        try:
-            delete_data = json.loads(list(QueryDict(request.body).keys())[0])
-            print('将删除的摘要数据的id为：', delete_data)
-            AbstractText.objects.filter(id=delete_data['id']).delete()
-            return JsonResponse({'message': None})
-        except Exception:
-            return JsonResponse({'message': '删除数据失败！请重试'})
     else:
         print('???not get and not post? what are you doing?')
         return HttpResponseRedirect('/')
@@ -166,47 +160,6 @@ def manage_wechat(request):
         modifily_data(name_list, put_data, Wechat, context['wechat'].id)
 
         return HttpResponseRedirect('/manage/manage_wechat')
-    else:
-        print('???not get and not post? what are you doing?')
-        return HttpResponseRedirect('/')
-
-
-@login_required(login_url='/')
-def manage_category(request):
-    context = {
-        'menus': set_menus('manage_category'),
-        'menu1s': getMenu1s(),
-        'module1': Module.objects.filter(name='首页模块一'),
-        'module2': Module.objects.filter(name='首页模块二'),
-    }
-
-    if request.method == 'GET':
-        return render(request, 'app_manage/category.html', context=context)
-    elif request.method == 'POST':  # 前端传入的新增数据是列表
-        post_datas = json.loads(list(request.POST.keys())[0])
-        print('接收到post新增的分类数据：', post_datas, type(post_datas))
-
-        for post_data in post_datas:
-            Category.objects.create(**post_data)
-
-        return JsonResponse({'message': None})
-    elif request.method == 'PUT':
-        put_datas = json.loads(list(QueryDict(request.body).keys())[0])
-        print('接收到put修改的分类数据：', put_datas, type(put_datas))
-
-        name_list = ['name', 'parent_id']
-        for put_data in put_datas:
-            modifily_data(name_list, put_data, Category, put_data['id'])
-
-        return JsonResponse({'message': None})
-    elif request.method == 'DELETE':
-        try:
-            delete_data = json.loads(list(QueryDict(request.body).keys())[0])
-            print('将删除的菜单分类数据的id为：', delete_data)
-            Category.objects.filter(id=delete_data['id']).delete()
-            return JsonResponse({'message': None})
-        except Exception:
-            return JsonResponse({'message': '删除数据失败！请重试'})
     else:
         print('???not get and not post? what are you doing?')
         return HttpResponseRedirect('/')
@@ -292,6 +245,10 @@ def manage_carousel(request):
 
 
 def getMenu12s():
+    """
+    获取没有子菜单的分类菜单
+    :return:
+    """
     all_menus = Category.objects.all()
     menu12s = []
     for menu in all_menus:
@@ -375,51 +332,15 @@ def select_category(request, id):
     }
     set_current_menus(context, Category.objects.get(id=id))
 
-    context['articles'] = Article.objects.filter(category_id=id).order_by('modified_time')
+    context['articles'] = Article.objects.filter(category_id=id).order_by('-modified_time')
 
     return render(request, 'app_manage/articles.html', context=context)
 
 
-def set_module(name, category_id):
-    module = Module.objects.filter(name=name)
-    print(category_id)
-    if category_id == '----空----':
-        print('删除')
-        module.delete()
-    else:
-        if module:
-            module = module[0]
-            module.category_id = category_id
-            module.save()
-        else:
-            Module.objects.create(name=name, category_id=category_id)
-
-
-@login_required(login_url='/')
-def set_module1(request):
-    if request.method == 'POST':  # 前端是form表单提交
-        post_data = request.POST
-        print('接收到post的设置模块1数据：', post_data)
-
-        name = '首页模块一'
-        set_module(name, post_data['category_id'])
-
-        return HttpResponseRedirect('/manage/manage_category')
-
-
-@login_required(login_url='/')
-def set_module2(request):
-    if request.method == 'POST':  # 前端是form表单提交
-        post_data = request.POST
-        print('接收到post的设置模块2数据：', post_data)
-
-        name = '首页模块二'
-        set_module(name, post_data['category_id'])
-
-        return HttpResponseRedirect('/manage/manage_category')
-
-
 class LoginView(View):
+    def get(self, request):
+        return render(request, 'app_manage/login.html')
+
     def post(self, request):
         context = {
             'message': None,

@@ -29,7 +29,7 @@
                                 <td>
                                     <button class="btn btn-default" {% if forloop.first %}disabled{% endif %} onclick="up_number({{ carousel.id }})">上移</button>
                                     <button class="btn btn-default" {% if forloop.last %}disabled{% endif %} onclick="down_number({{ carousel.id }})">下移</button>
-                                    <button class="btn btn-danger" onclick="del_carousel({{ carousel.id }})">删除</button>
+                                    <button class="btn btn-danger" onclick="del_carousel({{ carousel.id }})">移除</button>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -70,7 +70,7 @@
                     <ul>
                         {% for article in articles %}
                             <a href="{% url 'manage_article' article.id %}">
-                                {% include 'app1/article_list_item.html' %}
+                                {% include 'app_manage/article_list_item.html' %}
                             </a>
                         {% endfor %}
                     </ul>

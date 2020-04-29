@@ -9,10 +9,6 @@ class LoginForm(Form):
     password = fields.CharField()
 
 
-class DecForm(forms.Form):
-    dec = UEditorField("", initial="", height=200, toolbars="besttome")
-
-
 class ContentForm(forms.Form):
     content = UEditorField("", height=500, width=830, toolbars='besttome')
 
@@ -22,9 +18,8 @@ class CompanyImageForm(ModelForm):
         model = Company
         labels = {
             'logo': '',
-            'big_img': ''
         }
-        fields = ['logo', 'big_img']
+        fields = ['logo', ]
 
 
 class WechatImageForm(ModelForm):

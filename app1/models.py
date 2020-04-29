@@ -9,15 +9,12 @@ class Company(models.Model):
     name = models.CharField('公司名称', max_length=50)
     slogan = models.CharField('口号', max_length=100, null=True, blank=True)
     logo = models.ImageField(upload_to='images', null=True, blank=True, verbose_name='logo')
-    big_img = models.ImageField(upload_to='images', null=True, blank=True, verbose_name='首页大背景图片')
-    dec = UEditorField('公司简介', null=True, blank=True, width=1000, height=300, toolbars="besttome")
     email = models.EmailField('公司邮箱', null=True, blank=True)
     telephone = models.CharField('联系电话', max_length=20, null=True, blank=True)
     phone = models.CharField('手机', max_length=16, null=True, blank=True)
     qq = models.CharField('客服QQ', max_length=20, null=True, blank=True)
     wechat = models.CharField('客服微信', max_length=30, null=True, blank=True)
     address = models.CharField('地址', max_length=300, null=True, blank=True)
-    domain_name = models.CharField('官网域名', max_length=100, null=True, blank=True)
     icp = models.CharField('icp', max_length=100, null=True, blank=True)
 
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
@@ -42,6 +39,7 @@ class Wechat(models.Model):
 
 class Category(models.Model):
     name = models.CharField('分类名称', max_length=20)
+    menu_name = models.CharField('菜单英文名', max_length=20, null=True, blank=True)
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, verbose_name='父分类', related_name='child')
 
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
@@ -87,19 +85,6 @@ class Carousel(models.Model):
         return self.title
 
 
-# 首页摘要简介
-class AbstractText(models.Model):
-    title = models.CharField('摘要标题', max_length=100)
-    title2 = models.CharField('副标题', max_length=100, null=True, blank=True)
-    content = models.TextField('摘要内容')
-
-    create_time = models.DateTimeField('创建时间', auto_now_add=True)
-    modified_time = models.DateTimeField('最新修改时间', auto_now=True)
-
-    def __str__(self):
-        return self.title
-
-
 class ViewNumber(models.Model):
     ip = models.CharField('客户端ip', max_length=20)
     article = models.ForeignKey(Article, verbose_name='浏览的文章', on_delete=models.CASCADE)
@@ -110,11 +95,3 @@ class ViewNumber(models.Model):
 
     def __str__(self):
         return self.ip
-
-
-class Module(models.Model):
-    name = models.CharField('模块名称', max_length=50)
-    category = models.ForeignKey(Category, verbose_name='对应菜单', on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
