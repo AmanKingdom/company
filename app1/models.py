@@ -74,8 +74,7 @@ class Article(models.Model):
 # 轮播图
 class Carousel(models.Model):
     img = models.ImageField('轮播图图片', upload_to='images/carousel_img')
-    title = models.CharField('轮播图标题', max_length=100)
-    article = models.ForeignKey(Article, verbose_name='轮播图对应文章id', null=True, blank=True, on_delete=models.CASCADE, related_name='carousels')
+    title = models.CharField('轮播图标题', max_length=100, null=True, blank=True)
     number = models.IntegerField('轮播图序号', default=0)
 
     create_time = models.DateTimeField('创建时间', auto_now_add=True)

@@ -6,7 +6,6 @@ from rest_framework import status
 
 from app1.models import *
 
-
 def getCompany():
     companys = Company.objects.all()
     if companys:
@@ -51,6 +50,21 @@ def add_view_number(request, art):
         art.save()
 
 
+def get_all_plants_article():
+    plant_cates = Category.objects.filter(parent__menu_name='aquatic_plant')
+    print('获取水草文章类别', plant_cates)
+    if plant_cates:
+        plant_articles = []
+        for plant_cate in plant_cates:
+            temp = plant_cate.articles.all()
+            print('获取水草文章', temp)
+            if temp:
+                for x in temp:
+                    plant_articles.append(x)
+        return plant_articles
+    return None
+
+
 def homepage(request):
     context = {
         'company': getCompany(),
@@ -59,6 +73,8 @@ def homepage(request):
         'menu_homepage': True,
         'new_news5': None,
         'case4': None,
+        'wechat':getWechat(),
+        'plant_articles': get_all_plants_article(),
     }
     context['new_news5'] = Category.objects.get(menu_name='news').articles.order_by('-modified_time')
     if len(context['new_news5']) > 5:
@@ -98,7 +114,7 @@ def article(request, id):
         context['current_menu2_brother'] = Category.objects.filter(parent_id=context['article'].category.parent_id)
         print(context['article'].category, '的胸弟菜单：', context['current_menu2_brother'])
     else:   # 没有子菜单
-        context['articles'] = context['article'].category.articles.order_by('-modified_time')
+        context['articles'] = context['article'].category.articles.order_by('-publish_time')
 
     return render(request, 'app1/article.html', context=context, status=status.HTTP_200_OK)
 
@@ -118,7 +134,7 @@ def category(request, menu_name):
     cate = Category.objects.get(menu_name=menu_name)
     set_current_menus(context, cate)
 
-    context['articles'] = Article.objects.filter(category_id=cate.id).order_by('-modified_time')
+    context['articles'] = Article.objects.filter(category_id=cate.id).order_by('-publish_time')
 
     if context['current_menu2']:    # 有子菜单情况
         context['current_menu2_brother'] = Category.objects.filter(parent_id=cate.parent_id)

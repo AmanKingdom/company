@@ -1,0 +1,60 @@
+{% extends 'app_manage/manage.html' %}
+
+{% block manage_css %}{% endblock %}
+
+
+
+{% block manage_body %}
+<a href="{% url 'carousel' %}" style="float:right;"><button class="btn btn-default">添加轮播图</button></a><br><br><br>
+    {% if carousels %}
+        <div class="row">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h3>首页轮播图</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead><tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">轮播图图片</th>
+                            <th class="text-center">标题</th>
+                            <th class="text-center">操作</th>
+                        </tr></thead>
+                        <tbody>
+                        {% for carousel in carousels %}
+                            <tr>
+                                <td>{{ carousel.number }}</td>
+                                <td><img src="{{ carousel.img.url }}" style="width:100px;"/></td>
+                                <td>{{ carousel.title }}</td>
+                                <td>
+                                    <button class="btn btn-default" {% if forloop.first %}disabled{% endif %} onclick="up_number({{ carousel.id }})">上移</button>
+                                    <button class="btn btn-default" {% if forloop.last %}disabled{% endif %} onclick="down_number({{ carousel.id }})">下移</button>
+                                    <button class="btn btn-danger" onclick="del_carousel({{ carousel.id }})">移除</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+
+
+{% block manage_js %}
+    <script>
+        function del_carousel(carousel_id) {
+            common_reload_ajax("{% url 'manage_carousels' %}", "delete", JSON.stringify({'id': carousel_id}))
+        }
+        function up_number(carousel_id) {
+            common_reload_ajax("{% url 'manage_carousels' %}", "put", JSON.stringify({'id': carousel_id, 'operate': 1}))
+        }
+        function down_number(carousel_id) {
+            common_reload_ajax("{% url 'manage_carousels' %}", "put", JSON.stringify({'id': carousel_id, 'operate': 0}))
+        }
+    </script>
+{% endblock %}
+

@@ -13,59 +13,130 @@
 
     <script src="/static/js/jquery-1.11.1.min.js"> </script>
     <script src="/static/js/bootstrap.js"></script>
+
+    {% block css_block %}{% endblock %}
 </head>
 <body>
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
         <div class="row">
             <div class="col-xs-8">
-                <img src="/static/images/title.png" style="width:70%;margin-top: 6px;">
+                <img src="/static/images/title.png" style="width:86%;margin: 16px 0 16px;">
             </div>
             <div class="col-xs-4">
+                <div style="float:right;margin: 16px 15px 16px;">
+                    <p style="color: green;font-weight: bold;font-size: 24px;"><span class="glyphicon glyphicon-earphone"></span>{{company.telephone}}</p>
+                </div>
                 <form action="{% url 'search' %}" method="post">
                     {% csrf_token %}
 
-                    <div class="form-group">
-                        <div class="col-xs-9">
-                            <input class="form-control" type="text" name="keyword" placeholder="站内搜索" required="" autofocus value="{{ request.session.keyword }}"/>
+                    <div class="form-group" style="float:right;">
+                        <div class="col-xs-9" style="margin: 0;padding: 0;">
+                            <input style="border-radius: 0;" class="form-control" type="text" name="keyword" placeholder="站内搜索" required="" value="{{ request.session.keyword }}"/>
                         </div>
-                        <div class="col-xs-3">
-                            <button type="submit" class="btn btn-default">搜索</button>
+                        <div class="col-xs-3" style="margin: 0;padding: 0;">
+                            <button style="border-radius: 0;" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true" style="color: green;"></span></button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <hr style="margin-top: 0;">
-        <div class="row">
-            <div class="container">
-                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu_list" style="width: 100%;background-color: rgb(51,122,183)">本站菜单</button>
-            </div>
-            <div class="collapse navbar-collapse" id="menu_list">
-                <ul class="nav nav-pills nav-justified">
-                    <li role="presentation" {% if menu_homepage %}class="active"{% endif %}><a href="{% url 'homepage' %}">首页</a></li>
-                    {% for menu1 in menu1s %}
-                        <li role="presentation" {% if menu1.id|urlencode:'' == current_menu1.id|urlencode:'' %}class="active" {% endif %}>
-                            {% if menu1.has_children %}
-                                <a href="#" class="dropdown-toggle hvr-bounce-to-bottom" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ menu1.name }} <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    {% for menu2 in menu1.has_children %}
-                                        <li role="presentation"><a class="hvr-bounce-to-bottom" href="{% url 'category' menu2.menu_name %}">{{menu2.name}}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <a href="{% url 'category' menu1.menu_name %}">{{ menu1.name }}</a>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <hr>
-        {% block body_block %}{% endblock %}
-    <br>
-    <br>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                        <ul class="nav nav-justified">
+                            <li {% if menu_homepage %}class="active"{% endif %}><a class="nav_a" href="{% url 'homepage' %}">首页</a></li>
+                            {% for menu1 in menu1s %}
+                                <li class="{% if menu1.has_children %}dropdown{% endif %} {% if menu1.id|urlencode:'' == current_menu1.id|urlencode:'' %}active{% endif %}">
+                                    {% if menu1.has_children %}
+                                        <a href="#" class="nav_a dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ menu1.name }} <span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            {% for menu2 in menu1.has_children %}
+                                                <li><a class="nav_dropdown_a" href="{% url 'category' menu2.menu_name %}">{{menu2.name}}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <a  class="nav_a" href="{% url 'category' menu1.menu_name %}">{{ menu1.name }}</a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+{% if not menu_homepage %}
+    <div class="row">
+        <div class="col-xs-12 long_img" style="height: 150px;background: url('/static/images/big_img5.jpg')"></div>
+    </div>
+{% endif %}
+{% block big_img %}{% endblock %}
+<br>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+        {% block body_block %}{% endblock %}
+    </div>
+</div>
+
+
+<br>
+<br>
+<div class="row">
+    <div class="col-xs-12" style="height: 260px; width: 100%;background-color: green;">
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2" style="color: white;padding: 50px 0 30px;">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <h3>{{ company.name }}</h3><br>
+                        <p>公司理念：{{ company.slogan }}</p>
+                        <p style="margin-top: 3px;">公司地址：{{ company.address }}</p>
+                        <br>
+                        <p>
+                            &copy; 2020
+                            <a href="http://idinfo.zjamr.zj.gov.cn/bscx.do?method=lzxx&amp;id=3301963301080000025024" target="_blank">
+                                <img src="//gw.alicdn.com/tfs/TB1GxwdSXXXXXa.aXXXXXXXXXXX-65-70.gif" style="height: 20px;">
+                            </a>
+                            <a href="http://www.beian.gov.cn/portal/registerSystemInfo" target="_blank">
+                                <img src="//img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" style="height: 20px;">
+                                <span class="white_text">{{company.icp}}</span>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col-xs-4">
+                        <h4 style="margin: 50px 0 6px;">联系我们</h4>
+                        {% if company.qq %}<p style="margin-bottom: 3px;">客服QQ ：{{ company.qq }}</p>{% endif %}
+                        {% if company.wechat %}<p style="margin-bottom: 3px;">客服微信：{{company.wechat}}</p>{% endif %}
+                        {% if company.telephone %}<p style="margin-bottom: 3px;">咨询热线：{{ company.telephone }}</p>{% endif %}
+                        {% if company.phone %}<p style="margin-bottom: 3px;">联系手机：{{company.phone}}</p>{% endif %}
+                        {% if company.email %}<p style="margin-bottom: 3px;">公司邮箱：{{company.email}}</p>{% endif %}
+                    </div>
+                    <div class="col-xs-3 text-center" style="float:right;">
+                        <img src="{{wechat.qrcode.url}}" style="height: 120px; width:120px;"{% if wechat.logo %} onmouseover="this.src='{{ wechat.logo.url }}'" onmouseout="this.src='{{ wechat.qrcode.url}}'" {% endif %}/>
+                        <p style="margin-top: 8px;">{{wechat.name}}</p>
+                        <p>微信扫一扫，关注我们</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('li.dropdown').mouseover(function () {
+            $(this).addClass('open');
+        }).mouseout(function () {
+            $(this).removeClass('open');
+        });
+    });
+</script>
 </body>
 </html>

@@ -17,16 +17,35 @@
                 </ul>
             </div>
             <div class="col-sm-9">
-                {% if articles %}  <!--多篇文章-->
-                    {% for article in articles %}
-                        <a href="{% url 'article' article.id %}">
-                            {% include 'app1/article_list_item.html' %}
-                        </a>
-                    {% endfor %}
-                {% elif article %}   <!--单篇文章-->
-                    {% include 'app1/article_detail.html' %}
-                {% else %}   <!--没有文章-->
-                    <p class="text-center" style="margin-top: 30px;">暂无文章</p>
+                {% if current_menu2.parent.menu_name|urlencode:'' == 'aquatic_plant' %}
+                    {% if articles %}  <!--多篇文章-->
+                        {% for article in articles %}
+                            <div class="col-xs-3" style="height: 100%;margin-bottom: 30px;">
+                                <div class="plant_img_text" style="background: url({{ article.cover_img.url }});">
+                                    <a href="{% url 'article' article.id %}">{{ article.title }}</a>
+                                </div>
+                            </div>
+                            {% if forloop.counter == 4 %}
+
+                            {% endif %}
+                        {% endfor %}
+                    {% elif article %}   <!--单篇文章-->
+                        {% include 'app1/article_detail.html' %}
+                    {% else %}   <!--没有文章-->
+                        <p class="text-center" style="margin-top: 30px;">暂无文章</p>
+                    {% endif %}
+                {% else %}
+                    {% if articles %}  <!--多篇文章-->
+                        {% for article in articles %}
+                            <a href="{% url 'article' article.id %}">
+                                {% include 'app1/article_list_item.html' %}
+                            </a>
+                        {% endfor %}
+                    {% elif article %}   <!--单篇文章-->
+                        {% include 'app1/article_detail.html' %}
+                    {% else %}   <!--没有文章-->
+                        <p class="text-center" style="margin-top: 30px;">暂无文章</p>
+                    {% endif %}
                 {% endif %}
             </div>
         {% else %}  <!--无子菜单-->

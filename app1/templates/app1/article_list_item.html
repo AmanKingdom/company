@@ -5,9 +5,9 @@
         </div>
 
         <div class="col-xs-8">
-            <h4 style="margin-bottom: 10px;">{{ article.title }}</h4>
+            <h3 style="margin-bottom: 10px;">{{ article.title }}</h3>
             <p>{{ article.get_pure_content|slice:":100"}}……</p>
-            <p style="float: right;margin-top: 10px;">{{ article.modified_time }}</p>
+            <p style="float: right;margin-top: 10px;">{{ article.publish_time }}</p>
         </div>
     </div>
 </div>

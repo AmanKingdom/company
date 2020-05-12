@@ -1,7 +1,7 @@
 from django.forms import Form, fields, forms, ModelForm
 from DjangoUeditor.forms import UEditorField
 
-from app1.models import Company, Wechat, Article
+from app1.models import Company, Wechat, Article, Carousel
 
 
 class LoginForm(Form):
@@ -20,6 +20,15 @@ class CompanyImageForm(ModelForm):
             'logo': '',
         }
         fields = ['logo', ]
+
+
+class CarouselImageForm(ModelForm):
+    class Meta:
+        model = Carousel
+        labels = {
+            'img': '',
+        }
+        fields = ['img', ]
 
 
 class WechatImageForm(ModelForm):

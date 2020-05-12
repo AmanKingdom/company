@@ -9,9 +9,9 @@ from rest_framework import status
 
 from app1.models import Company, Wechat, Category, Article, Carousel
 from app1.views import getCompany, getWechat, getMenu1s, set_current_menus
-from app_manage.forms import LoginForm, CompanyImageForm, WechatImageForm, ContentForm, ArticleImageForm
+from app_manage.forms import LoginForm, CompanyImageForm, WechatImageForm, ContentForm, ArticleImageForm, \
+    CarouselImageForm
 from app_manage.models import User
-
 
 CATEGORYS = [
     {'name': '新闻动态', 'menu_name': 'news', 'parent': None},
@@ -71,15 +71,20 @@ def set_menus(name):
             'url_name': 'manage_company',
             'name': '公司信息'
         },
-        # 'manage_wechat': {
-        #     'active': False,
-        #     'url_name': 'manage_wechat',
-        #     'name': '微信公众号'
-        # },
+        'manage_wechat': {
+            'active': False,
+            'url_name': 'manage_wechat',
+            'name': '微信公众号'
+        },
         'manage_articles': {
             'active': False,
             'url_name': 'manage_articles',
             'name': '文章管理'
+        },
+        'manage_carousels':{
+            'active': False,
+            'url_name': 'manage_carousels',
+            'name': '轮播图管理'
         },
         'write_article': {
             'active': False,
@@ -173,7 +178,6 @@ def manage_articles(request):
         'current_menu1': None,
         'current_menu2': None,
         'articles': None,
-        'carousels': Carousel.objects.all().order_by('number')
     }
 
     if request.method == 'GET':
@@ -212,18 +216,41 @@ def carousel_down(id):
 
 
 @login_required(login_url='/')
-def manage_carousel(request):
-    if request.method == 'POST':  # 前端传入的新增数据是要设为轮播图的文章id
-        put_data = json.loads(list(request.POST.keys())[0])
-        print('接收到post新增的轮播图文章id：', put_data, type(put_data))
+def carousel(request):  # 新建轮播图
+    if request.method == 'GET':
+        context = {
+            'carousel_image_form': CarouselImageForm(),
+            'menus': set_menus('manage_carousels')
+        }
+        return render(request, 'app_manage/carousel.html', context=context)
+    elif request.method == 'POST':
+        post_data = request.POST
+        print('接收到post新增的轮播图信息：', post_data)
+        carousel_image_form = CarouselImageForm(post_data, request.FILES)
 
-        article = Article.objects.get(id=put_data['article_id'])
-        carousels = Carousel.objects.filter(article=article)
-        if not carousels:
-            number = len(Carousel.objects.all()) + 1
-            Carousel.objects.create(img=article.cover_img, title=article.title, article=article, number=number)
+        number = len(Carousel.objects.all()) + 1
 
-        return JsonResponse({'message': None})
+        if carousel_image_form.is_valid():
+            carousel = carousel_image_form.save()
+
+            # 后更新其余数据
+            carousel.number = number
+            carousel.title = post_data.get('title')
+            carousel.save()
+
+            return HttpResponseRedirect('/manage/manage_carousels')
+
+        return HttpResponseRedirect('/manage/carousel')
+
+
+@login_required(login_url='/')
+def manage_carousels(request):
+    if request.method == 'GET':
+        context = {
+            'carousels': Carousel.objects.all().order_by('number'),
+            'menus': set_menus('manage_carousels')
+        }
+        return render(request, 'app_manage/carousels.html', context=context)
     elif request.method == 'PUT':
         put_data = json.loads(list(QueryDict(request.body).keys())[0])
         print('接收到put修改的轮播图id：', put_data, type(put_data))

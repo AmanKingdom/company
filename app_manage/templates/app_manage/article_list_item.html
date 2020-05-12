@@ -12,11 +12,6 @@
         {% if request.session.username %}
             <div class="col-xs-2">
                 <button class="btn btn-danger" style="float: right;" onclick="del_article({{ article.id }})">删除该文章</button>
-                {% if not article.carousels.all.0 %}
-                    <br>
-                    <br>
-                    <button class="btn btn-primary" style="float: right;" onclick="set_carousel({{ article.id }})">设为轮播图</button>
-                {% endif %}
             </div>
         {% endif %}
     </div>
@@ -27,9 +22,5 @@
         if(del) {
             common_reload_ajax("{% url 'manage_article' 'article_id' %}".replace('article_id', article_id), "delete", "");
         }
-    }
-
-    function set_carousel(article_id) {
-        common_reload_ajax('{% url "manage_carousel" %}', "post", JSON.stringify({'article_id': article_id}));
     }
 </script>
