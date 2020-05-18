@@ -5,8 +5,9 @@
 {% endblock %}
 
 {% block body_block %}
-    <div class="row">
-        {% if current_menu2_brother %}  <!--有子菜单-->
+    {#    <div class="row">#}
+    {% if current_menu2_brother %}  <!--有子菜单-->
+        <div class="row">
             <div class="col-sm-3">
                 <ul class="nav nav-pills nav-stacked" style="border-left: 1px solid #efefef;border-right: 1px solid #efefef;">
                     {% for menu in current_menu2_brother %}
@@ -25,9 +26,6 @@
                                     <a href="{% url 'article' article.id %}">{{ article.title }}</a>
                                 </div>
                             </div>
-                            {% if forloop.counter == 4 %}
-
-                            {% endif %}
                         {% endfor %}
                     {% elif article %}   <!--单篇文章-->
                         {% include 'app1/article_detail.html' %}
@@ -48,25 +46,26 @@
                     {% endif %}
                 {% endif %}
             </div>
-        {% else %}  <!--无子菜单-->
-            {% if articles %}   <!--多篇文章-->
-                <div class="col-sm-3">
-                    {% for article in articles %}
-                        <a href="{% url 'article' article.id %}">
-                            {% include 'app1/little_article_list_item.html' %}
-                        </a>
-                    {% endfor %}
-                </div>
-                <div class="col-sm-9">
-                    {% include 'app1/article_detail.html' %}
-                </div>
-            {% else %}
-                {% if article %}   <!--单篇文章-->
-                    {% include 'app1/article_detail.html' %}
-                {% else %}   <!--没有文章-->
-                    <p class="text-center" style="margin-top: 30px;">暂无文章</p>
-                {% endif %}
+        </div>
+    {% else %}  <!--无子菜单-->
+        {% if articles %}   <!--多篇文章-->
+            <div class="col-sm-3">
+                {% for article in articles %}
+                    <a href="{% url 'article' article.id %}">
+                        {% include 'app1/little_article_list_item.html' %}
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="col-sm-9">
+                {% include 'app1/article_detail.html' %}
+            </div>
+        {% else %}
+            {% if article %}   <!--单篇文章-->
+                {% include 'app1/article_detail.html' %}
+            {% else %}   <!--没有文章-->
+                <p class="text-center" style="margin-top: 30px;">暂无文章</p>
             {% endif %}
         {% endif %}
-    </div>
+    {% endif %}
+    {#    </div>#}
 {% endblock %}
