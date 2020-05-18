@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from rest_framework import status
 
@@ -75,6 +75,7 @@ def homepage(request):
         'case4': None,
         'wechat':getWechat(),
         'plant_articles': get_all_plants_article(),
+        'yewu4s': Category.objects.filter(parent__menu_name='business')[:4]
     }
     context['new_news5'] = Category.objects.get(menu_name='news').articles.order_by('-modified_time')
     if len(context['new_news5']) > 5:
@@ -85,6 +86,18 @@ def homepage(request):
         context['case4'] = context['case4'][0:4]
 
     return render(request, 'app1/index.html', context=context, status=status.HTTP_200_OK)
+
+
+def submit_message(request):
+    if request.method == 'POST':
+        post_data = request.POST
+        print('接收到新增留言：', post_data)
+        temp = {}
+        for key, value in post_data.items():
+            temp[key] = value
+        print('整理数据：', temp)
+        Message.objects.create(**temp)
+    return JsonResponse({'status': True, 'message': '留言成功！'})
 
 
 def set_current_menus(context, current_menu):

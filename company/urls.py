@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from app1.views import homepage, article, category, search
+from app1.views import homepage, article, category, search, submit_message
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -27,6 +27,8 @@ urlpatterns = [
     path('article/<id>/', article, name='article'),
     path('category/<menu_name>/', category, name='category'),
     path('search/', search, name='search'),
+
+    path('submit_message/', submit_message, name='submit_message'),
 
     path('ueditor/', include('DjangoUeditor.urls')),
     path('manage/', include('app_manage.urls')),

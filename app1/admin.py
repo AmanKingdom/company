@@ -42,3 +42,9 @@ class CarouselAdmin(ModelAdmin):
 class ViewNumberAdmin(ModelAdmin):
     list_display = ('id', 'ip', 'number', 'create_time', 'modified_time')
     list_editable = ['ip', 'number']
+
+
+@admin.register(Message)
+class MessageAdmin(ModelAdmin):
+    list_display = ('id', 'content', 'name', 'phone', 'email', 'address')
+    list_editable = ['content', 'name', 'phone', 'email', 'address']

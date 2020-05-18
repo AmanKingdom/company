@@ -1,0 +1,59 @@
+{% extends 'app_manage/manage.html' %}
+
+{% block manage_css %}{% endblock %}
+
+
+
+{% block long_body %}
+    {% if messages %}
+        <div class="row">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h3>用户留言</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead><tr>
+                            <th class="text-center">编号</th>
+                            <th class="text-center">留言内容</th>
+                            <th class="text-center">用户姓名</th>
+                            <th class="text-center">电话</th>
+                            <th class="text-center">邮箱</th>
+                            <th class="text-center">地址</th>
+                            <th class="text-center">操作</th>
+                        </tr></thead>
+                        <tbody>
+                        {% for message in messages %}
+                            <tr>
+                                <td>{{ message.id }}</td>
+                                <td>{{ message.content }}</td>
+                                <td>{{ message.name }}</td>
+                                <td>{{ message.phone }}</td>
+                                <td>{{ message.email }}</td>
+                                <td>{{ message.address }}</td>
+                                <td>
+                                    <button class="btn btn-default" {% if message.seen %}disabled{% endif %} onclick="seen({{ message.id }})">{% if message.seen %}已读{% else %}标记为已读{% endif %}</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h1 class="text-center">还没有留言</h1>
+    {% endif %}
+
+{% endblock %}
+
+
+
+{% block manage_js %}
+    <script>
+        function seen(message_id) {
+            common_reload_ajax("{% url 'manage_message' %}", "put", JSON.stringify({'id': message_id}))
+        }
+    </script>
+{% endblock %}
+

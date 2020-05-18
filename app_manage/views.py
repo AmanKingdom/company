@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.views import View
 from rest_framework import status
 
-from app1.models import Company, Wechat, Category, Article, Carousel
+from app1.models import Company, Wechat, Category, Article, Carousel, Message
 from app1.views import getCompany, getWechat, getMenu1s, set_current_menus
 from app_manage.forms import LoginForm, CompanyImageForm, WechatImageForm, ContentForm, ArticleImageForm, \
     CarouselImageForm
@@ -31,8 +31,6 @@ CATEGORYS = [
     {'name': '湿生植物', 'menu_name': 'hygrophyte', 'parent': 'aquatic_plant'},
 
     {'name': '生产基地', 'menu_name': 'production_base', 'parent': None},
-    {'name': '广东东莞基地', 'menu_name': 'dongguan', 'parent': 'production_base'},
-    {'name': '广西南宁基地', 'menu_name': 'nanning', 'parent': 'production_base'},
 
     {'name': '工程案例', 'menu_name': 'case', 'parent': None},
     {'name': '联系我们', 'menu_name': 'contact_us', 'parent': None},
@@ -91,6 +89,11 @@ def set_menus(name):
             'url_name': 'write_article',
             'name': '写文章'
         },
+        'manage_message': {
+            'active': False,
+            'url_name': 'manage_message',
+            'name': '用户留言'
+        },
     }
     menus[name]['active'] = True
     return menus
@@ -139,6 +142,21 @@ def manage_company(request):
     else:
         print('???not get and not post? what are you doing?')
         return HttpResponseRedirect('/')
+
+
+@login_required(login_url='/')
+def manage_message(request):
+    if request.method == 'GET':
+        context = {
+            'menus': set_menus('manage_message'),
+            'messages': Message.objects.all().order_by('-create_time')
+        }
+        return render(request, 'app_manage/messages.html', context=context)
+    if request.method == 'PUT':
+        put_data = json.loads(list(QueryDict(request.body).keys())[0])
+        print('接收到put设置已读留言id：', put_data, type(put_data))
+        Message.objects.filter(id=put_data['id']).update(seen=True)
+        return JsonResponse({'status': True})
 
 
 @login_required(login_url='/')

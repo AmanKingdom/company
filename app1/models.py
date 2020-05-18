@@ -94,3 +94,18 @@ class ViewNumber(models.Model):
 
     def __str__(self):
         return self.ip
+
+
+class Message(models.Model):
+    content = models.TextField('留言内容')
+    name = models.CharField('姓名', max_length=100, null=True, blank=True)
+    phone = models.CharField('电话', max_length=100)
+    email = models.CharField('邮箱', max_length=100, null=True, blank=True)
+    address = models.CharField('地址', max_length=100, null=True, blank=True)
+    seen = models.BooleanField('是否查阅', default=False)
+
+    create_time = models.DateTimeField('创建时间', auto_now_add=True)
+    modified_time = models.DateTimeField('最新修改时间', auto_now=True)
+
+    def __str__(self):
+        return self.content

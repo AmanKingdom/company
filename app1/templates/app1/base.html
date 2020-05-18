@@ -17,6 +17,32 @@
     {% block css_block %}{% endblock %}
 </head>
 <body>
+
+
+<div style="width: 40px; height: 40px;right: 8px;top:310px;position: fixed;z-index: 100000;" onclick="show_message()">
+    <img title="点击留言" src="/static/images/message.png" style="width: 100%; height: 100%;" onmouseover="this.src='/static/images/message2.png'" onmouseout="this.src='/static/images/message.png'"/>
+</div>
+
+<div style="width: 300px; height: 450px;right:80px;top: 150px;position:fixed;z-index: 100000" id="message_box" hidden>
+    <div class="panel panel-primary" style="width: 100%;">
+        <div class="panel-heading" style="height: 50px;">
+            <h3 style="display: block; float: left;">欢迎留言</h3>
+            <button style="float: right;color: white;font-weight: bold;" class="btn btn-primary" onclick="show_message()">—</button>
+        </div>
+        <div class="panel-body">
+            <form id="message_form">
+                <textarea placeholder="请写下您的留言，我们会尽快与您联系。（必填）" class="form-control" name="content" required></textarea><br>
+                <input class="form-control" type="text" placeholder="姓名"  name="name"/><br>
+                <input class="form-control" type="text" placeholder="电话（必填）"  name="phone" required/><br>
+                <input class="form-control" type="text" placeholder="邮箱"  name="email"/><br>
+                <input class="form-control" type="text" placeholder="地址"  name="address"/><br>
+            </form>
+            <button class="btn btn-primary form-control" onclick="submit_message()">发送</button>
+        </div>
+    </div>
+</div>
+
+
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
         <div class="row">
@@ -45,40 +71,42 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
         <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-                        <ul class="nav nav-justified">
-                            <li {% if menu_homepage %}class="active"{% endif %}><a class="nav_a" href="{% url 'homepage' %}">首页</a></li>
-                            {% for menu1 in menu1s %}
-                                <li class="{% if menu1.has_children %}dropdown{% endif %} {% if menu1.id|urlencode:'' == current_menu1.id|urlencode:'' %}active{% endif %}">
-                                    {% if menu1.has_children %}
-                                        <a href="#" class="nav_a dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ menu1.name }} <span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            {% for menu2 in menu1.has_children %}
-                                                <li><a class="nav_dropdown_a" href="{% url 'category' menu2.menu_name %}">{{menu2.name}}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    {% else %}
-                                        <a  class="nav_a" href="{% url 'category' menu1.menu_name %}">{{ menu1.name }}</a>
-                                    {% endif %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            {#            <div class="container-fluid">#}
+            <ul class="nav nav-justified">
+                <li {% if menu_homepage %}class="active"{% endif %}><a class="nav_a" href="{% url 'homepage' %}">首页</a></li>
+                {% for menu1 in menu1s %}
+                    <li class="{% if menu1.has_children %}dropdown{% endif %} {% if menu1.id|urlencode:'' == current_menu1.id|urlencode:'' %}active{% endif %}">
+                        {% if menu1.has_children %}
+                            <a href="#" class="nav_a dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ menu1.name }} <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {% for menu2 in menu1.has_children %}
+                                    <li><a class="nav_dropdown_a" href="{% url 'category' menu2.menu_name %}">{{menu2.name}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <a  class="nav_a" href="{% url 'category' menu1.menu_name %}">{{ menu1.name }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            {#            </div>#}
         </nav>
     </div>
 </div>
 {% if not menu_homepage %}
     <div class="row">
-        <div class="col-xs-12 long_img" style="height: 150px;background: url('/static/images/big_img5.jpg')"></div>
+        <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2" style="height: 150px;">
+            <div class="long_img" style="background: url('/static/images/long_img.jpg')"></div>
+        </div>
     </div>
 {% endif %}
-{% block big_img %}{% endblock %}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">{% block big_img %}{% endblock %}</div>
+</div>
+
 <br>
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
@@ -88,41 +116,38 @@
 
 
 <br>
-<br>
 <div class="row">
-    <div class="col-xs-12" style="height: 260px; width: 100%;background-color: green;">
-        <div class="row">
-            <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2" style="color: white;padding: 50px 0 30px;">
-                <div class="row">
-                    <div class="col-xs-5">
-                        <h3>{{ company.name }}</h3><br>
-                        <p>公司理念：{{ company.slogan }}</p>
-                        <p style="margin-top: 3px;">公司地址：{{ company.address }}</p>
-                        <br>
-                        <p>
-                            &copy; 2020
-                            <a href="http://idinfo.zjamr.zj.gov.cn/bscx.do?method=lzxx&amp;id=3301963301080000025024" target="_blank">
-                                <img src="//gw.alicdn.com/tfs/TB1GxwdSXXXXXa.aXXXXXXXXXXX-65-70.gif" style="height: 20px;">
-                            </a>
-                            <a href="http://www.beian.gov.cn/portal/registerSystemInfo" target="_blank">
-                                <img src="//img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" style="height: 20px;">
-                                <span class="white_text">{{company.icp}}</span>
-                            </a>
-                        </p>
-                    </div>
-                    <div class="col-xs-4">
-                        <h4 style="margin: 50px 0 6px;">联系我们</h4>
-                        {% if company.qq %}<p style="margin-bottom: 3px;">客服QQ ：{{ company.qq }}</p>{% endif %}
-                        {% if company.wechat %}<p style="margin-bottom: 3px;">客服微信：{{company.wechat}}</p>{% endif %}
-                        {% if company.telephone %}<p style="margin-bottom: 3px;">咨询热线：{{ company.telephone }}</p>{% endif %}
-                        {% if company.phone %}<p style="margin-bottom: 3px;">联系手机：{{company.phone}}</p>{% endif %}
-                        {% if company.email %}<p style="margin-bottom: 3px;">公司邮箱：{{company.email}}</p>{% endif %}
-                    </div>
-                    <div class="col-xs-3 text-center" style="float:right;">
-                        <img src="{{wechat.qrcode.url}}" style="height: 120px; width:120px;"{% if wechat.logo %} onmouseover="this.src='{{ wechat.logo.url }}'" onmouseout="this.src='{{ wechat.qrcode.url}}'" {% endif %}/>
-                        <p style="margin-top: 8px;">{{wechat.name}}</p>
-                        <p>微信扫一扫，关注我们</p>
-                    </div>
+    <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2" style="height: 260px;">
+        <div style=" background-color: green;padding: 50px 50px 30px;color: white;">
+            <div class="row">
+                <div class="col-xs-6">
+                    <h3>{{ company.name }}</h3><br>
+                    <p>公司理念：{{ company.slogan }}</p>
+                    <p style="margin-top: 3px;">公司地址：{{ company.address }}</p>
+                    <br>
+                    <p>
+                        &copy; 2020
+                        <a href="http://idinfo.zjamr.zj.gov.cn/bscx.do?method=lzxx&amp;id=3301963301080000025024" target="_blank">
+                            <img src="//gw.alicdn.com/tfs/TB1GxwdSXXXXXa.aXXXXXXXXXXX-65-70.gif" style="height: 20px;">
+                        </a>
+                        <a href="http://www.beian.gov.cn/portal/registerSystemInfo" target="_blank">
+                            <img src="//img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" style="height: 20px;">
+                            <span class="white_text">{{company.icp}}</span>
+                        </a>
+                    </p>
+                </div>
+                <div class="col-xs-3">
+                    <h4 style="margin: 50px 0 6px;">联系我们</h4>
+                    {% if company.qq %}<p style="margin-bottom: 3px;">客服QQ ：{{ company.qq }}</p>{% endif %}
+                    {% if company.wechat %}<p style="margin-bottom: 3px;">客服微信：{{company.wechat}}</p>{% endif %}
+                    {% if company.telephone %}<p style="margin-bottom: 3px;">咨询热线：{{ company.telephone }}</p>{% endif %}
+                    {% if company.phone %}<p style="margin-bottom: 3px;">联系手机：{{company.phone}}</p>{% endif %}
+                    {% if company.email %}<p style="margin-bottom: 3px;">公司邮箱：{{company.email}}</p>{% endif %}
+                </div>
+                <div class="col-xs-3 text-center" style="float:right;">
+                    <img src="{{wechat.qrcode.url}}" style="height: 120px; width:120px;"{% if wechat.logo %} onmouseover="this.src='{{ wechat.logo.url }}'" onmouseout="this.src='{{ wechat.qrcode.url}}'" {% endif %}/>
+                    <p style="margin-top: 8px;">{{wechat.name}}</p>
+                    <p>微信扫一扫，关注我们</p>
                 </div>
             </div>
         </div>
@@ -137,6 +162,32 @@
             $(this).removeClass('open');
         });
     });
+
+    function show_message(){
+        if($('#message_box').is(':hidden')){//如果当前隐藏
+            $('#message_box').show();//那么就显示div
+        }else{//否则
+            $('#message_box').hide();//就隐藏div
+        }
+    }
+
+    function submit_message(){
+        $.ajax({
+            type:'POST',
+            url:{% url 'submit_message' %},
+            data:$('#message_form').serialize(),
+            dataType:'JSON',
+            headers:{'X-CSRFToken':'{{ csrf_token }}'},
+            error:function(request){
+                console.log("出错?", request);
+                alert('操作失败，请重试一下哈');
+            },
+            success:function(data){
+                alert(data.message);
+                show_message();
+            }
+        });
+    }
 </script>
 </body>
 </html>

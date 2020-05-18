@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from .views import manage_company, LoginView, logout_view, manage_wechat, init_menu,\
-    manage_articles, manage_article, write_article, select_category, manage_carousels, carousel
+    manage_articles, manage_article, write_article, select_category, manage_carousels, carousel, manage_message
 
 urlpatterns = [
     path('init_menu/', init_menu, name='init_menu'),
@@ -17,6 +17,9 @@ urlpatterns = [
     path('write_article/', write_article, name='write_article'),
     path('manage_article/<id>/', manage_article, name='manage_article'),
     path('select_category/<id>/', select_category, name='select_category'),
+
+    path('manage_message/', manage_message, name='manage_message'),
+
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', logout_view, name='logout'),
 ]
