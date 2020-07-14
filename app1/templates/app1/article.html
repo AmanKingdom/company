@@ -22,9 +22,8 @@
                     {% if articles %}  <!--多篇文章-->
                         {% for article in articles %}
                             <div class="col-xs-3" style="height: 100%;margin-bottom: 30px;">
-                                <div class="plant_img_text" style="background: url({{ article.cover_img.url }});">
-                                    <a href="{% url 'article' article.id %}">{{ article.title }}</a>
-                                </div>
+                                <div class="plant_img_text" style="background: url({{ article.cover_img.url }});">.</div>
+                                <div style="width: 100%;padding: 5px;" class="text-center"><a href="{% url 'article' article.id %}">{{ article.title }}</a></div>
                             </div>
                         {% endfor %}
                     {% elif article %}   <!--单篇文章-->
