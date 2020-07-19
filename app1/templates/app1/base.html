@@ -136,7 +136,7 @@
                         </a>
                     </p>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-4">
                     <h4 style="margin: 50px 0 6px;">联系我们</h4>
                     {% if company.qq %}<p style="margin-bottom: 3px;">客服QQ ：{{ company.qq }}</p>{% endif %}
                     {% if company.wechat %}<p style="margin-bottom: 3px;">客服微信：{{company.wechat}}</p>{% endif %}
@@ -144,10 +144,10 @@
                     {% if company.phone %}<p style="margin-bottom: 3px;">联系手机：{{company.phone}}</p>{% endif %}
                     {% if company.email %}<p style="margin-bottom: 3px;">公司邮箱：{{company.email}}</p>{% endif %}
                 </div>
-                <div class="col-xs-3 text-center" style="float:right;">
+                <div class="col-xs-2 text-center" style="float:right;">
                     <img src="{{wechat.qrcode.url}}" style="height: 120px; width:120px;"{% if wechat.logo %} onmouseover="this.src='{{ wechat.logo.url }}'" onmouseout="this.src='{{ wechat.qrcode.url}}'" {% endif %}/>
                     <p style="margin-top: 8px;">{{wechat.name}}</p>
-                    <p>微信扫一扫，关注我们</p>
+                    <p>扫码关注我们</p>
                 </div>
             </div>
         </div>
