@@ -8,11 +8,13 @@
     <meta name="keywords" content="{% if company.name %}{{ company.name }}{% else %}公司首页{% endif %}" />
 
     <link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+    {#    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">#}
     <link href="/static/css/style.css" rel='stylesheet' type='text/css' />
     <link href="/static/css/font-awesome.css" rel="stylesheet">
 
     <script src="/static/js/jquery-1.11.1.min.js"> </script>
-    <script src="/static/js/bootstrap.js"></script>
+    {#    <script src="/static/js/bootstrap.js"></script>#}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     {% block css_block %}{% endblock %}
 </head>
@@ -125,17 +127,15 @@
                     <p>公司理念：{{ company.slogan }}</p>
                     <p style="margin-top: 3px;">公司地址：{{ company.address }}</p>
                     <br>
-                    <p>
-                        &copy; 2020
-                        <a href="http://idinfo.zjamr.zj.gov.cn/bscx.do?method=lzxx&amp;id=3301963301080000025024" target="_blank">
-                            <img src="//gw.alicdn.com/tfs/TB1GxwdSXXXXXa.aXXXXXXXXXXX-65-70.gif" style="height: 20px;">
-                        </a>
-                        <a href="http://www.beian.gov.cn/portal/registerSystemInfo" target="_blank">
-                            <img src="//img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" style="height: 20px;">
-                            <span class="white_text">{{company.icp}}</span>
-                        </a>
-                    </p>
+                    <p>&copy; 2020 520hye.com</p>
+                    <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44190002004903" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
+                        <img src="/static/images/default/备案图标.png" style="float:left;height: 20px;"/><span class="white_text">粤公网安备 44190002004903号</span>
+                    </a>
+                    <a href="http://www.beian.gov.cn/portal/registerSystemInfo" target="_blank">
+                        <span class="white_text">{{company.icp}}</span>
+                    </a>
                 </div>
+
                 <div class="col-xs-4">
                     <h4 style="margin: 50px 0 6px;">联系我们</h4>
                     {% if company.qq %}<p style="margin-bottom: 3px;">客服QQ ：{{ company.qq }}</p>{% endif %}
